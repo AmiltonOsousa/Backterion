@@ -22,4 +22,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\tela_principal.png">
+      <Filter>Arquivos de Origem</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
