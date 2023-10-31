@@ -90,15 +90,25 @@ int main() {
 	ALLEGRO_BITMAP* brasil = al_load_bitmap("brasil.png");
 
 
+	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DA LOJA--------\\
+	
+	ALLEGRO_BITMAP* store = al_load_bitmap("store.png");
+
+
 	al_set_window_title(display, "Baktérion-23");
 	al_register_event_source(queue, al_get_display_event_source(display));
 	al_register_event_source(queue, al_get_mouse_event_source());
+	al_register_event_source(queue, al_get_keyboard_event_source());
+
+	ALLEGRO_EVENT event;
 
 
 	//---------------------------TELA---------------------------\\
 
 	while (1) {
 
+		int x = 1;
+		bool openStore = false;
 		bool select = false;
 		bool start = false;
 
@@ -115,16 +125,6 @@ int main() {
 		if (close && event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 			break;		
 	
-
-		//-----------Evento para abrir a loja-----------\\
-
-		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-
-			switch (event.keyboard.keycode) {
-				case ALLEGRO_KEY_SPACE:
-				action = 1;
-			}
-		}
 
 		// Desenha a imagem
 		al_draw_bitmap(brasil, 0, 0, 0);
@@ -167,9 +167,31 @@ int main() {
 
 
 			//-------------Gráfico Brasil--------------
-		if (start = true) {
+		
 
+
+		//-----------Evento para abrir a loja-----------\\
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+
+			if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
+				openStore = true;
+		
+			}
+
+			else
+				openStore = false;
 		}
+
+		if (openStore) {
+
+			while (x == 1) {
+
+				al_draw_bitmap(store, 0, 0, 0);
+				al_flip_display();
+			}
+		}
+		
 
 		// Atualiza a tela quando tiver algo para mostrar
 		al_flip_display();
