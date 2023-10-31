@@ -1,18 +1,24 @@
 #include <stdio.h>
-#include <iostream>
+#include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <stdbool.h>
 
+
+ALLEGRO_MONITOR_INFO monitor_info;
 
 //variáveis globais
 const int SCREEN_W = 1600;
 const int SCREEN_H = 900;
 
 
+// Função de inicialização
 int init() {
 
-	// Inicializamos a biblioteca e apresentar erro caso o al init não retorne 0
+	// Inicializar biblioteca
 	if (!al_init()) {
 		printf("Falha na inicialização");
 		return -1;
@@ -28,14 +34,38 @@ int init() {
 	if (!al_install_keyboard()) {
 		printf("Falha na inicialização do teclado");
 		return -1;
-
-
 	}
+
+	// Inicializar o mouse
+	if (!al_install_mouse()) {
+		printf("Falha na inicialização do mouse");
+		return -1;
+	}
+
+	// Inicilizar primitiva gráfica
+	if (!al_init_primitives_addon()) {
+		printf("Falha na inicialização da biblioteca \"primitives\"");
+		return -1;
+	}
+
+	if (!al_init_font_addon()) {
+		printf("Falha na inicialização da fonte");
+		return -1;
+	}
+
+	if (!al_init_ttf_addon()) {
+		printf("Falha na inicialização da fonte true type");
+		return -1;
+	}
+
 
 	return 0;
 }
 
+
 int main() {
+
+	int action;
 
 	// Função de inicialização
 	init();
@@ -45,34 +75,101 @@ int main() {
 
 
 	// Variável representando a janela principal
-	ALLEGRO_DISPLAY* display = al_create_display(SCREEN_W, SCREEN_H);;
+	ALLEGRO_DISPLAY* display = al_create_display(SCREEN_W, SCREEN_H);
 
-	// Variável representando a imagem
-	ALLEGRO_BITMAP* image = al_load_bitmap("tela_principal.png");;
-
+	// Variável representando a fonte
+	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 20, 0);
+	
+	// Variável representando a fila
 	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 
+	// Variável representando o fundo
+	ALLEGRO_BITMAP* background = al_load_bitmap("background.png");
+
+	// Variável representando a imagem do Brasil
+	ALLEGRO_BITMAP* brasil = al_load_bitmap("brasil.png");
 
 
+	al_set_window_title(display, "Baktérion-23");
 	al_register_event_source(queue, al_get_display_event_source(display));
+	al_register_event_source(queue, al_get_mouse_event_source());
+
 
 	//---------------------------TELA---------------------------\\
 
-	bool playing = true;
+	while (1) {
 
-	while (playing) {
+		bool select = false;
+		bool start = false;
+
+		//---------Evento para fechar a tela---------\\
 
 		ALLEGRO_EVENT event;
 		ALLEGRO_TIMEOUT timeout;
 		al_init_timeout(&timeout, 0.05);
 
+		// Espera o evento para fechar tela
 		int close = al_wait_for_event_until(queue, &event, &timeout);
-
+		
+		// Fecha tela ao acontecer o evento
 		if (close && event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-			break;
+			break;		
+	
+
+		//-----------Evento para abrir a loja-----------\\
+
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+
+			switch (event.keyboard.keycode) {
+				case ALLEGRO_KEY_SPACE:
+				action = 1;
+			}
+		}
 
 		// Desenha a imagem
-		al_draw_bitmap(image, 0, 0, 0);
+		al_draw_bitmap(brasil, 0, 0, 0);
+
+		
+		if (start == true) {
+			al_draw_line(500, 600, 1350, 600, al_map_rgb(255, 0, 0), 1);
+		}
+
+		al_draw_bitmap(background, 0, 0, 0);
+		al_draw_text(font, al_map_rgb(255, 0, 0), 1000, 600, ALLEGRO_ALIGN_LEFT, "Sigla do estado");
+
+
+		//---------Evento para escolher estado---------\\
+
+		if (event.type == ALLEGRO_EVENT_MOUSE_AXES){
+
+			if (event.mouse.x >= 0 && event.mouse.x <= 800 &&
+				event.mouse.y >= 0 && event.mouse.y <= 900) {
+
+				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Evento funcionou");
+				select = true;
+
+			}
+
+			else
+				select = false;
+		}
+
+		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+
+			if(select = true){
+
+				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
+				start = true;
+			}
+			
+		}
+			
+
+
+			//-------------Gráfico Brasil--------------
+		if (start = true) {
+
+		}
 
 		// Atualiza a tela quando tiver algo para mostrar
 		al_flip_display();
@@ -89,6 +186,11 @@ int main() {
 	// Finaliza fila de eventos
 	al_destroy_event_queue(queue);
 
+	// Finalizar fundo da tela
+	al_destroy_bitmap(background);
+
+	// Finalizar a fonte
+	al_destroy_font(font);
 
 	return 0;
 }
