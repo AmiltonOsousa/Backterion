@@ -58,7 +58,6 @@ int init() {
 		return -1;
 	}
 
-
 	return 0;
 }
 
@@ -89,10 +88,14 @@ int main() {
 	// Variável representando a imagem do Brasil
 	ALLEGRO_BITMAP* brasil = al_load_bitmap("brasil.png");
 
+	// Variável representando o timer
+	ALLEGRO_TIMER* timer = NULL, *contador = 0;
+
 
 	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DA LOJA--------\\
 	
 	ALLEGRO_BITMAP* store = al_load_bitmap("store.png");
+
 
 
 	al_set_window_title(display, "Baktérion-23");
@@ -100,8 +103,12 @@ int main() {
 	al_register_event_source(queue, al_get_mouse_event_source());
 	al_register_event_source(queue, al_get_keyboard_event_source());
 
-	ALLEGRO_EVENT event;
+	// Iniciar o timer 
+	al_start_timer(timer);
+	al_start_timer(contador);
 
+	ALLEGRO_EVENT event;
+	ALLEGRO_TIMEOUT timeout;
 
 	//---------------------------TELA---------------------------\\
 
@@ -114,8 +121,6 @@ int main() {
 
 		//---------Evento para fechar a tela---------\\
 
-		ALLEGRO_EVENT event;
-		ALLEGRO_TIMEOUT timeout;
 		al_init_timeout(&timeout, 0.05);
 
 		// Espera o evento para fechar tela
@@ -131,6 +136,8 @@ int main() {
 
 		
 		if (start == true) {
+
+			//usar o timer para desenhar a cada ciclo de tempo
 			al_draw_line(500, 600, 1350, 600, al_map_rgb(255, 0, 0), 1);
 		}
 
@@ -174,7 +181,7 @@ int main() {
 
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
 
-			if (event.keyboard.keycode == ALLEGRO_KEY_UP) {
+			if (event.keyboard.keycode == ALLEGRO_KEY_B) {
 				openStore = true;
 		
 			}
