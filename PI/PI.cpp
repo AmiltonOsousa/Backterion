@@ -64,21 +64,19 @@ int init() {
 
 int main() {
 
-	int action;
 
 	// Função de inicialização
 	init();
 
 
 	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DO JOGO--------\\
-
+ 
 
 	// Variável representando a janela principal
 	ALLEGRO_DISPLAY* display = al_create_display(SCREEN_W, SCREEN_H);
 
 	// Variável representando a fonte
 	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 20, 0);
-	
 	// Variável representando a fila
 	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
 
@@ -89,13 +87,13 @@ int main() {
 	ALLEGRO_BITMAP* brasil = al_load_bitmap("brasil.png");
 
 	// Variável representando o timer
-	ALLEGRO_TIMER* timer = NULL, *contador = 0;
+	ALLEGRO_TIMER* timer = NULL, * contador = 0;
 
 
 	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DA LOJA--------\\
-	
-	ALLEGRO_BITMAP* store = al_load_bitmap("store.png");
 
+	ALLEGRO_BITMAP* store = al_load_bitmap("store.png");
+	ALLEGRO_EVENT_QUEUE* storeQueue = al_create_event_queue();
 
 
 	al_set_window_title(display, "Baktérion-23");
@@ -103,41 +101,41 @@ int main() {
 	al_register_event_source(queue, al_get_mouse_event_source());
 	al_register_event_source(queue, al_get_keyboard_event_source());
 
-	// Iniciar o timer 
-	al_start_timer(timer);
-	al_start_timer(contador);
 
 	ALLEGRO_EVENT event;
 	ALLEGRO_TIMEOUT timeout;
 
 	//---------------------------TELA---------------------------\\
+ 
+	//al_start_timer(timer);
+	//al_start_timer(contador);
+
+	// Variáveis do jogo
+	bool start = false;
 
 	while (1) {
 
 		int x = 1;
 		bool openStore = false;
 		bool select = false;
-		bool start = false;
 
 		//---------Evento para fechar a tela---------\\
-
+ 
 		al_init_timeout(&timeout, 0.05);
 
 		// Espera o evento para fechar tela
-		int close = al_wait_for_event_until(queue, &event, &timeout);
-		
+		int activeEvent = al_wait_for_event_until(queue, &event, &timeout);
 		// Fecha tela ao acontecer o evento
-		if (close && event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-			break;		
-	
+		if (activeEvent && event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+			break;
+		}
 
 		// Desenha a imagem
 		al_draw_bitmap(brasil, 0, 0, 0);
 
-		
 		if (start == true) {
 
-			//usar o timer para desenhar a cada ciclo de tempo
+			// Usar o timer para desenhar a cada ciclo de tempo
 			al_draw_line(500, 600, 1350, 600, al_map_rgb(255, 0, 0), 1);
 		}
 
@@ -146,8 +144,8 @@ int main() {
 
 
 		//---------Evento para escolher estado---------\\
-
-		if (event.type == ALLEGRO_EVENT_MOUSE_AXES){
+ 
+		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
 
 			if (event.mouse.x >= 0 && event.mouse.x <= 800 &&
 				event.mouse.y >= 0 && event.mouse.y <= 900) {
@@ -163,27 +161,22 @@ int main() {
 
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
-			if(select = true){
+			if (select = true) {
 
 				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
 				start = true;
 			}
-			
 		}
-			
-
-
-			//-------------Gráfico Brasil--------------
-		
 
 
 		//-----------Evento para abrir a loja-----------\\
-
+ 
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
 
 			if (event.keyboard.keycode == ALLEGRO_KEY_B) {
 				openStore = true;
-		
+
+
 			}
 
 			else
@@ -192,13 +185,19 @@ int main() {
 
 		if (openStore) {
 
-			while (x == 1) {
+			while (openStore) {
+
+				activeEvent = al_wait_for_event_until(queue, &event, &timeout);
+
+				if (event.type == ALLEGRO_EVENT_KEY_DOWN)
+					if (event.keyboard.keycode == ALLEGRO_KEY_B)
+						openStore = false;
 
 				al_draw_bitmap(store, 0, 0, 0);
 				al_flip_display();
 			}
 		}
-		
+
 
 		// Atualiza a tela quando tiver algo para mostrar
 		al_flip_display();
@@ -207,7 +206,7 @@ int main() {
 
 
 	//-----------------------DESTROYS------------------------\\
-
+ 
 
 	// Finaliza a janela
 	al_destroy_display(display);
@@ -217,6 +216,10 @@ int main() {
 
 	// Finalizar fundo da tela
 	al_destroy_bitmap(background);
+
+	// Finalizar bitmap
+	al_destroy_bitmap(brasil);
+	al_destroy_bitmap(store);
 
 	// Finalizar a fonte
 	al_destroy_font(font);
