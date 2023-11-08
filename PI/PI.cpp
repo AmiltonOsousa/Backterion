@@ -6,13 +6,14 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <stdbool.h>
+#include "./Janela.h"
 
 
 ALLEGRO_MONITOR_INFO monitor_info;
 
 //variáveis globais
 const int SCREEN_W = 1600;
-const int SCREEN_H = 900;
+const int SCREEN_H = 840;
 
 
 // Função de inicialização
@@ -20,6 +21,7 @@ int init() {
 
 	// Inicializar biblioteca
 	if (!al_init()) {
+
 		printf("Falha na inicialização");
 		return -1;
 	}
@@ -48,11 +50,13 @@ int init() {
 		return -1;
 	}
 
+	// Inicializar fonte
 	if (!al_init_font_addon()) {
 		printf("Falha na inicialização da fonte");
 		return -1;
 	}
 
+	// Inicializar fontes ttf's
 	if (!al_init_ttf_addon()) {
 		printf("Falha na inicialização da fonte true type");
 		return -1;
@@ -60,7 +64,6 @@ int init() {
 
 	return 0;
 }
-
 
 int main() {
 
@@ -106,7 +109,9 @@ int main() {
 	ALLEGRO_TIMEOUT timeout;
 
 	//---------------------------TELA---------------------------\\
- 
+	
+	//timer = al_create_timer(5);
+
 	//al_start_timer(timer);
 	//al_start_timer(contador);
 
@@ -115,7 +120,8 @@ int main() {
 
 	while (1) {
 
-		int x = 1;
+		int lineX = 600;
+
 		bool openStore = false;
 		bool select = false;
 
@@ -125,6 +131,7 @@ int main() {
 
 		// Espera o evento para fechar tela
 		int activeEvent = al_wait_for_event_until(queue, &event, &timeout);
+
 		// Fecha tela ao acontecer o evento
 		if (activeEvent && event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			break;
@@ -135,8 +142,7 @@ int main() {
 
 		if (start == true) {
 
-			// Usar o timer para desenhar a cada ciclo de tempo
-			al_draw_line(500, 600, 1350, 600, al_map_rgb(255, 0, 0), 1);
+			al_draw_line(500, lineX, 1350, lineX, al_map_rgb(255, 0, 0), 1);
 		}
 
 		al_draw_bitmap(background, 0, 0, 0);
@@ -176,7 +182,6 @@ int main() {
 			if (event.keyboard.keycode == ALLEGRO_KEY_B) {
 				openStore = true;
 
-
 			}
 
 			else
@@ -184,18 +189,8 @@ int main() {
 		}
 
 		if (openStore) {
-
-			while (openStore) {
-
-				activeEvent = al_wait_for_event_until(queue, &event, &timeout);
-
-				if (event.type == ALLEGRO_EVENT_KEY_DOWN)
-					if (event.keyboard.keycode == ALLEGRO_KEY_B)
-						openStore = false;
-
-				al_draw_bitmap(store, 0, 0, 0);
-				al_flip_display();
-			}
+			atualizar_janela(openStore, activeEvent, queue, event, timeout, store, font);
+			
 		}
 
 

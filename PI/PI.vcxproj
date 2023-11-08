@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Janela.cpp" />
     <ClCompile Include="PI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\tela_principal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Janela.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
