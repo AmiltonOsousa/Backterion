@@ -91,6 +91,38 @@ int main() {
 	// Variável representando o timer
 	ALLEGRO_TIMER* timer = NULL;
 
+	ALLEGRO_BITMAP* contorno = al_load_bitmap("Contorno.png");
+
+
+	//Estados
+
+	ALLEGRO_BITMAP* rs = al_load_bitmap("1_rs.png");
+	ALLEGRO_BITMAP* sc = al_load_bitmap("1_sc.png");
+	ALLEGRO_BITMAP* pr = al_load_bitmap("1_pr.png");
+	ALLEGRO_BITMAP* sp = al_load_bitmap("1_sp.png");
+	ALLEGRO_BITMAP* mg = al_load_bitmap("1_mg.png");
+	ALLEGRO_BITMAP* rj = al_load_bitmap("1_rj.png");
+	ALLEGRO_BITMAP* es = al_load_bitmap("1_es.png");
+	ALLEGRO_BITMAP* ba = al_load_bitmap("1_ba.png");
+	ALLEGRO_BITMAP* pi = al_load_bitmap("1_pi.png");
+	ALLEGRO_BITMAP* ma = al_load_bitmap("1_ma.png");
+	ALLEGRO_BITMAP* ce = al_load_bitmap("1_ce.png");
+	ALLEGRO_BITMAP* rn = al_load_bitmap("1_rn.png");
+	ALLEGRO_BITMAP* pb = al_load_bitmap("1_pb.png");
+	ALLEGRO_BITMAP* pe = al_load_bitmap("1_pe.png");
+	ALLEGRO_BITMAP* al = al_load_bitmap("1_al.png");
+	ALLEGRO_BITMAP* se = al_load_bitmap("1_se.png");
+	ALLEGRO_BITMAP* ac = al_load_bitmap("1_ac.png");
+	ALLEGRO_BITMAP* ro = al_load_bitmap("1_ro.png");
+	ALLEGRO_BITMAP* am = al_load_bitmap("1_am.png");
+	ALLEGRO_BITMAP* rr = al_load_bitmap("1_rr.png");
+	ALLEGRO_BITMAP* pa = al_load_bitmap("1_pa.png");
+	ALLEGRO_BITMAP* ap = al_load_bitmap("1_ap.png");
+	ALLEGRO_BITMAP* to = al_load_bitmap("1_to.png");
+	ALLEGRO_BITMAP* mt = al_load_bitmap("1_mt.png");
+	ALLEGRO_BITMAP* go = al_load_bitmap("1_go.png");
+	ALLEGRO_BITMAP* ms = al_load_bitmap("1_ms.png");
+
 
 	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DA LOJA--------\\
 
@@ -117,11 +149,18 @@ int main() {
 
 	//---------------------------TELA---------------------------\\
 	// Variáveis do jogo
-	bool start = false;
+	bool start = false, colorEvent = true;
+	bool infect[26]{};
 
 	int arraym[1000]{};
 	int indexLinha = 0;
 	int lineY = 600;
+	int r[26], g = 153, b = 153;
+
+	//TESTE
+	for (int i = 0; i < 26; i++)
+		r[i] = 153;
+
 
 	while (1) {
 
@@ -138,9 +177,6 @@ int main() {
 			break;
 		}
 
-		// Desenha a imagem
-		al_draw_tinted_bitmap(brasil, al_map_rgb(10, 0, 0), 0, 0, 0);
-
 		for (int i = 0; i < indexLinha; i++) {
 			al_draw_line(450, arraym[i], 1350, arraym[i], al_map_rgb(255, 0, 0), 1);
 		}
@@ -148,6 +184,33 @@ int main() {
 		al_draw_bitmap(background, 0, 0, 0);
 		al_draw_text(font, al_map_rgb(255, 0, 0), 1000, 600, ALLEGRO_ALIGN_LEFT, "Sigla do estadosss");
 
+
+		al_draw_tinted_bitmap(rs, al_map_rgb(r[0], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(sc, al_map_rgb(r[1], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(pr, al_map_rgb(r[2], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(sp, al_map_rgb(r[3], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(mg, al_map_rgb(r[4], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(rj, al_map_rgb(r[5], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(es, al_map_rgb(r[6], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ba, al_map_rgb(r[7], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(pi, al_map_rgb(r[8], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ma, al_map_rgb(r[9], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ce, al_map_rgb(r[10], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(rn, al_map_rgb(r[11], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(pb, al_map_rgb(r[12], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(pe, al_map_rgb(r[13], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(al, al_map_rgb(r[14], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(se, al_map_rgb(r[15], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ac, al_map_rgb(r[16], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ro, al_map_rgb(r[17], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(am, al_map_rgb(r[18], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(rr, al_map_rgb(r[19], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(pa, al_map_rgb(r[20], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ap, al_map_rgb(r[21], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(to, al_map_rgb(r[22], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(mt, al_map_rgb(r[23], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(go, al_map_rgb(r[24], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(ms, al_map_rgb(r[25], g, b), 0, 0, 0);
 
 		//---------Evento para escolher estado---------\\
 
@@ -164,18 +227,24 @@ int main() {
 
 		if (start == true) {
 
-			if (seg % 5 == 0) {
+			if (colorEvent) {
 
-				arraym[indexLinha] = lineY;
-				indexLinha++;
+				for (int i = 0; i < 26; i++)
+					r[i] = 0;
 
-				lineY++;
+				g = 0;
+				b = 0;
 
-				if (lineY == 1000)
-					lineY = 600;
+				colorEvent = false;
 			}
+
+			if (seg % 1 == 0)
+				r[1]++;
 		}
 	}
+
+	al_draw_bitmap(contorno, 0, 0, 0);
+
 	if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
 
 		if (event.mouse.x >= 0 && event.mouse.x <= 800 &&
