@@ -17,13 +17,19 @@ void atualizar_janela(bool openStore, int activeEvent, ALLEGRO_EVENT_QUEUE* queu
 		// Deseja a loja
 		al_draw_bitmap(store, 0, 0, 0);
 
+		/*
 		int teste = 20;
 		char *str;
 		sprintf(str, "%d", teste);
+		*/
 		
 		// Pontuação
-		al_draw_text(font, al_map_rgb(77, 0, 110), 250, 840, ALLEGRO_ALIGN_LEFT, str);
+		//al_draw_text(font, al_map_rgb(77, 0, 110), 250, 840, ALLEGRO_ALIGN_LEFT, str);
 
 		al_flip_display();
 	}
+}
+
+void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_BITMAP* store, ALLEGRO_FONT* font)
+{
 }

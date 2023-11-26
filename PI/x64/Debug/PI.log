@@ -1,4 +1,1 @@
-﻿  Janela.cpp
-C:\Users\amilton.osousa\source\repos\projeto\PI\Janela.cpp(22,3): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  PI.cpp
-  Gerando Código...
+﻿  PI.vcxproj -> C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (3)\x64\Debug\PI.exe
