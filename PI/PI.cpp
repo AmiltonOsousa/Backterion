@@ -69,15 +69,14 @@ int main() {
 	// Função de inicialização
 	init();
 
-	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DO JOGO--------\\
- 
-	int min = 0, seg = 0, point = 0;
 
 	// Variável representando a janela principal
 	ALLEGRO_DISPLAY* display = al_create_display(SCREEN_W, SCREEN_H);
 
 	// Variável representando a fonte
 	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 20, 0);
+	ALLEGRO_FONT* pointFont = al_load_font("BASKVILL.TTF", 20, 0);
+	ALLEGRO_FONT* arial = al_load_font("arial.ttf", 20, 0);
 
 	// Variável representando a fila
 	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
@@ -91,37 +90,38 @@ int main() {
 	// Variável representando o timer
 	ALLEGRO_TIMER* timer = NULL;
 
+	// Variável representando o contorno 
 	ALLEGRO_BITMAP* contorno = al_load_bitmap("Contorno.png");
 
 
 	//Estados
 
-	ALLEGRO_BITMAP* rs = al_load_bitmap("1_rs.png");
-	ALLEGRO_BITMAP* sc = al_load_bitmap("1_sc.png");
-	ALLEGRO_BITMAP* pr = al_load_bitmap("1_pr.png");
-	ALLEGRO_BITMAP* sp = al_load_bitmap("1_sp.png");
-	ALLEGRO_BITMAP* mg = al_load_bitmap("1_mg.png");
-	ALLEGRO_BITMAP* rj = al_load_bitmap("1_rj.png");
-	ALLEGRO_BITMAP* es = al_load_bitmap("1_es.png");
-	ALLEGRO_BITMAP* ba = al_load_bitmap("1_ba.png");
-	ALLEGRO_BITMAP* pi = al_load_bitmap("1_pi.png");
-	ALLEGRO_BITMAP* ma = al_load_bitmap("1_ma.png");
-	ALLEGRO_BITMAP* ce = al_load_bitmap("1_ce.png");
-	ALLEGRO_BITMAP* rn = al_load_bitmap("1_rn.png");
-	ALLEGRO_BITMAP* pb = al_load_bitmap("1_pb.png");
-	ALLEGRO_BITMAP* pe = al_load_bitmap("1_pe.png");
-	ALLEGRO_BITMAP* al = al_load_bitmap("1_al.png");
-	ALLEGRO_BITMAP* se = al_load_bitmap("1_se.png");
-	ALLEGRO_BITMAP* ac = al_load_bitmap("1_ac.png");
-	ALLEGRO_BITMAP* ro = al_load_bitmap("1_ro.png");
-	ALLEGRO_BITMAP* am = al_load_bitmap("1_am.png");
-	ALLEGRO_BITMAP* rr = al_load_bitmap("1_rr.png");
-	ALLEGRO_BITMAP* pa = al_load_bitmap("1_pa.png");
-	ALLEGRO_BITMAP* ap = al_load_bitmap("1_ap.png");
-	ALLEGRO_BITMAP* to = al_load_bitmap("1_to.png");
-	ALLEGRO_BITMAP* mt = al_load_bitmap("1_mt.png");
-	ALLEGRO_BITMAP* go = al_load_bitmap("1_go.png");
-	ALLEGRO_BITMAP* ms = al_load_bitmap("1_ms.png");
+	ALLEGRO_BITMAP* rs = al_load_bitmap("estado/1_rs.png");
+	ALLEGRO_BITMAP* sc = al_load_bitmap("estado/1_sc.png");
+	ALLEGRO_BITMAP* pr = al_load_bitmap("estado/1_pr.png");
+	ALLEGRO_BITMAP* sp = al_load_bitmap("estado/1_sp.png");
+	ALLEGRO_BITMAP* mg = al_load_bitmap("estado/1_mg.png");
+	ALLEGRO_BITMAP* rj = al_load_bitmap("estado/1_rj.png");
+	ALLEGRO_BITMAP* es = al_load_bitmap("estado/1_es.png");
+	ALLEGRO_BITMAP* ba = al_load_bitmap("estado/1_ba.png");
+	ALLEGRO_BITMAP* pi = al_load_bitmap("estado/1_pi.png");
+	ALLEGRO_BITMAP* ma = al_load_bitmap("estado/1_ma.png");
+	ALLEGRO_BITMAP* ce = al_load_bitmap("estado/1_ce.png");
+	ALLEGRO_BITMAP* rn = al_load_bitmap("estado/1_rn.png");
+	ALLEGRO_BITMAP* pb = al_load_bitmap("estado/1_pb.png");
+	ALLEGRO_BITMAP* pe = al_load_bitmap("estado/1_pe.png");
+	ALLEGRO_BITMAP* al = al_load_bitmap("estado/1_al.png");
+	ALLEGRO_BITMAP* se = al_load_bitmap("estado/1_se.png");
+	ALLEGRO_BITMAP* ac = al_load_bitmap("estado/1_ac.png");
+	ALLEGRO_BITMAP* ro = al_load_bitmap("estado/1_ro.png");
+	ALLEGRO_BITMAP* am = al_load_bitmap("estado/1_am.png");
+	ALLEGRO_BITMAP* rr = al_load_bitmap("estado/1_rr.png");
+	ALLEGRO_BITMAP* pa = al_load_bitmap("estado/1_pa.png");
+	ALLEGRO_BITMAP* ap = al_load_bitmap("estado/1_ap.png");
+	ALLEGRO_BITMAP* to = al_load_bitmap("estado/1_to.png");
+	ALLEGRO_BITMAP* mt = al_load_bitmap("estado/1_mt.png");
+	ALLEGRO_BITMAP* go = al_load_bitmap("estado/1_go.png");
+	ALLEGRO_BITMAP* ms = al_load_bitmap("estado/1_ms.png");
 
 
 	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DA LOJA--------\\
@@ -130,7 +130,6 @@ int main() {
 	ALLEGRO_EVENT_QUEUE* storeQueue = al_create_event_queue();
 
 	al_set_window_title(display, "Baktérion-23");
-
 
 	//----------------------FILA DE EVENT----------------------\\
 
@@ -149,23 +148,29 @@ int main() {
 
 	//---------------------------TELA---------------------------\\
 	// Variáveis do jogo
-	bool start = false, colorEvent = true;
-	bool infect[26]{};
+	bool start = false, colorEvent = true, selectState = true;
+	bool infect[26]{}; //colorEvent: transformar em array
 
-	int arraym[1000]{};
-	int indexLinha = 0;
-	int lineY = 600;
-	int r[26], g = 153, b = 153;
+	int r[26]{};
+	int g = 153, b = 153;
+	bool limit[26]{};
+
+
+	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DO JOGO--------\\
+
+	int min = 0, seg = 0, intPoint = 0;
+	const char point = intPoint + '0';
 
 	//TESTE
-	for (int i = 0; i < 26; i++)
+	for (int i = 0; i < 26; i++) {
 		r[i] = 153;
-
+		limit[i] = false;
+	}
 
 	while (1) {
 
 		bool openStore = false;
-		bool select = false;
+		bool select;
 
 		//---------Evento para fechar a tela---------\\
 		// Espera o evento para fechar tela
@@ -177,13 +182,7 @@ int main() {
 			break;
 		}
 
-		for (int i = 0; i < indexLinha; i++) {
-			al_draw_line(450, arraym[i], 1350, arraym[i], al_map_rgb(255, 0, 0), 1);
-		}
-
 		al_draw_bitmap(background, 0, 0, 0);
-		al_draw_text(font, al_map_rgb(255, 0, 0), 1000, 600, ALLEGRO_ALIGN_LEFT, "Sigla do estadosss");
-
 
 		al_draw_tinted_bitmap(rs, al_map_rgb(r[0], g, b), 0, 0, 0);
 		al_draw_tinted_bitmap(sc, al_map_rgb(r[1], g, b), 0, 0, 0);
@@ -215,98 +214,141 @@ int main() {
 		//---------Evento para escolher estado---------\\
 
 		if (event.type == ALLEGRO_EVENT_TIMER) {
-		seg++;
+			seg++;
 
+			// Pontuação
+			if (seg == 15)
+				intPoint++;
 
-		// Grafico com o tempo
-		if (seg == 60) {
+			if (seg == 60) {
 
-			min++;
-			seg = 0;
-		}
-
-		if (start == true) {
-
-			if (colorEvent) {
-
-				for (int i = 0; i < 26; i++)
-					r[i] = 0;
-
-				g = 0;
-				b = 0;
-
-				colorEvent = false;
+				min++;
+				seg = 0;
 			}
 
-			if (seg % 1 == 0)
-				r[1]++;
-		}
-	}
+			if (start == true) {
 
-	al_draw_bitmap(contorno, 0, 0, 0);
+				if (colorEvent) {
 
-	if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+					for (int i = 0; i < 26; i++)
+						r[i] = 0;
 
-		if (event.mouse.x >= 0 && event.mouse.x <= 800 &&
-			event.mouse.y >= 0 && event.mouse.y <= 900) {
+					g = 0;
+					b = 0;
 
-			al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Evento funcionou");
-			select = true;
+					colorEvent = false;
+				}
 
-		}
+				if (seg % 1 == 0 && limit[1] == false) {
 
-		else
-			select = false;
-	}
+					r[1]++;
 
-	if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+					if (r[1] == 255)
+						limit[1] = true;
+				}
 
-		if (select = true) {
-
-			al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
-			start = true;
-		}
-	}
-
-
-	//-----------Evento para abrir a loja-----------\\
- 
-	if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
-
-		if (event.keyboard.keycode == ALLEGRO_KEY_B) {
-			openStore = true;
-
+			}
 		}
 
-		else
-			openStore = false;
+		al_draw_bitmap(contorno, 0, 0, 0);
+
+		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) { //720, 400, 830.0, 500.0
+
+			if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
+				event.mouse.y >= 400 && event.mouse.y <= 500) {
+
+				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
+				select = true;
+				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Evento funcionou");
+
+			}
+
+			else {
+
+				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+				select = false;
+				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Select False");
+			}
+		}
+
+		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+
+			if (select == true) {
+
+				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Entrou");
+
+				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
+				start = true;
+			}
+		}
+
+		//-----------Evento para abrir a loja-----------\\
+	 
+		if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+
+			if (event.keyboard.keycode == ALLEGRO_KEY_B)
+				openStore = true;
+
+			else
+				openStore = false;
+		}
+
+		if (openStore) {
+			atualizar_janela(openStore, queue, event, timeout, store, font);
+		}
+
+		al_draw_rectangle(720, 400, 830.0, 500.0, al_map_rgb(255, 0, 255), 2.0); //MT
+		al_draw_rectangle(920, 500, 1000, 580, al_map_rgb(255, 0, 255), 2.0); //MG
+
+		// Atualiza a tela quando tiver algo para mostrar
+		al_flip_display();
+
 	}
 
-	if (openStore) {
-		atualizar_janela(openStore, queue, event, store, font);
-	}
+	//-----------------------DESTROYS------------------------\\
 
-	// Atualiza a tela quando tiver algo para mostrar
-	al_flip_display();
+	// Finaliza a janela
+	al_destroy_display(display);
 
-}
+	// Finaliza fila de eventos 
+	al_destroy_event_queue(queue);
 
-//-----------------------DESTROYS------------------------\\
-		// Finaliza a janela
-al_destroy_display(display);
+	// Finalizar fundo da tela
+	al_destroy_bitmap(background);
 
-// Finaliza fila de eventos
-al_destroy_event_queue(queue);
+	// Finalizar bitmap
+	al_destroy_bitmap(brasil);
+	al_destroy_bitmap(store);
 
-// Finalizar fundo da tela
-al_destroy_bitmap(background);
+	// Finalizar a fonte
+	al_destroy_font(font);
 
-// Finalizar bitmap
-al_destroy_bitmap(brasil);
-al_destroy_bitmap(store);
+	al_destroy_bitmap(rs);
+	al_destroy_bitmap(sc);
+	al_destroy_bitmap(pr);
+	al_destroy_bitmap(sp);
+	al_destroy_bitmap(mg);
+	al_destroy_bitmap(rj);
+	al_destroy_bitmap(es);
+	al_destroy_bitmap(ba);
+	al_destroy_bitmap(pi);
+	al_destroy_bitmap(ma);
+	al_destroy_bitmap(ce);
+	al_destroy_bitmap(rn);
+	al_destroy_bitmap(pb);
+	al_destroy_bitmap(pe);
+	al_destroy_bitmap(al);
+	al_destroy_bitmap(se);
+	al_destroy_bitmap(ac);
+	al_destroy_bitmap(ro);
+	al_destroy_bitmap(am);
+	al_destroy_bitmap(rr);
+	al_destroy_bitmap(pa);
+	al_destroy_bitmap(ap);
+	al_destroy_bitmap(to);
+	al_destroy_bitmap(mt);
+	al_destroy_bitmap(go);
+	al_destroy_bitmap(ms);
 
-// Finalizar a fonte
-al_destroy_font(font);
-
-return 0;
+	return 0;
 }
