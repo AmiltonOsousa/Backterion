@@ -148,9 +148,10 @@ int main() {
 
 	//---------------------------TELA---------------------------\\
 	// Variáveis do jogo
-	bool start = false, colorEvent = true, selectState = true;
+	bool start = false;
 	bool infect[26]{}; //colorEvent: transformar em array
 
+	int colorEvent[26]{};
 	int r[26]{};
 	int g = 153, b = 153;
 	bool limit[26]{};
@@ -160,17 +161,22 @@ int main() {
 
 	int min = 0, seg = 0, intPoint = 0;
 	const char point = intPoint + '0';
+	bool select = false;
 
 	//TESTE
 	for (int i = 0; i < 26; i++) {
+
 		r[i] = 153;
 		limit[i] = false;
+		infect[i] = false;
+		colorEvent[i] = false;
+
+		select = false;
 	}
 
 	while (1) {
 
 		bool openStore = false;
-		bool select;
 
 		//---------Evento para fechar a tela---------\\
 		// Espera o evento para fechar tela
@@ -228,27 +234,27 @@ int main() {
 
 			if (start == true) {
 
-				if (colorEvent) {
-
-					for (int i = 0; i < 26; i++)
+				for (int i = 0; i < 26; i++) {
+					if (colorEvent[i] == true && infect[i] == true) {
 						r[i] = 0;
+					}
 
-					g = 0;
-					b = 0;
-
-					colorEvent = false;
+					colorEvent[i] = false;
 				}
-
-				if (seg % 1 == 0 && limit[1] == false) {
-
-					r[1]++;
-
-					if (r[1] == 255)
-						limit[1] = true;
-				}
-
 			}
+
+			for (int i = 0; i < 26; i++) {
+				if (seg % 1 == 0 && limit[i] == false && infect[i] == true) {
+
+					r[i]++;
+
+					if (r[i] == 255)
+						limit[i] = true;
+				}
+			}
+
 		}
+		
 
 		al_draw_bitmap(contorno, 0, 0, 0);
 
@@ -257,8 +263,10 @@ int main() {
 			if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
 				event.mouse.y >= 400 && event.mouse.y <= 500) {
 
-				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
+				infect[23] = true;
+				colorEvent[23] = true;
 				select = true;
+				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
 				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Evento funcionou");
 
 			}
@@ -274,8 +282,6 @@ int main() {
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
 			if (select == true) {
-
-				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Entrou");
 
 				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
 				start = true;
