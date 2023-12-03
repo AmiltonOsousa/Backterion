@@ -1,2 +1,3 @@
-﻿  Janela.cpp
-  PI.vcxproj -> C:\Users\amilton.osousa\source\repos\PI\x64\Debug\PI.exe
+﻿  PI.cpp
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (4)\PI\PI.cpp(144,22): warning C4101: 'state': variável local não referenciada
+  PI.vcxproj -> C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (4)\x64\Debug\PI.exe

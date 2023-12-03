@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compraLoja.cpp" />
     <ClCompile Include="Janela.cpp" />
     <ClCompile Include="PI.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <Image Include="..\..\..\..\Downloads\tela_principal.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="compraLoja.h" />
     <ClInclude Include="Janela.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

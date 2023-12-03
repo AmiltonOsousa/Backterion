@@ -7,11 +7,10 @@
 #include <allegro5/allegro_ttf.h>
 #include <stdbool.h>
 #include "./Janela.h"
+#include "./selecaoEstado.h"
 
 
-ALLEGRO_MONITOR_INFO monitor_info;
-
-//variáveis globais
+// Variáveis globais
 const int SCREEN_W = 1600;
 const int SCREEN_H = 900;
 
@@ -75,7 +74,7 @@ int main() {
 
 	// Variável representando a fonte
 	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 20, 0);
-	ALLEGRO_FONT* pointFont = al_load_font("BASKVILL.TTF", 20, 0);
+	ALLEGRO_FONT* pointFont = al_load_font("BASKVILL.TTF", 40, 0);
 	ALLEGRO_FONT* arial = al_load_font("arial.ttf", 20, 0);
 
 	// Variável representando a fila
@@ -93,8 +92,11 @@ int main() {
 	// Variável representando o contorno 
 	ALLEGRO_BITMAP* contorno = al_load_bitmap("Contorno.png");
 
+	// Variável representando o icone da pontuação
+	ALLEGRO_BITMAP* bioIcon = al_load_bitmap("bioIcon.png");
 
-	//Estados
+
+	// Estados
 
 	ALLEGRO_BITMAP* rs = al_load_bitmap("estado/1_rs.png");
 	ALLEGRO_BITMAP* sc = al_load_bitmap("estado/1_sc.png");
@@ -139,6 +141,8 @@ int main() {
 
 	ALLEGRO_EVENT event;
 	ALLEGRO_TIMEOUT timeout{};
+	ALLEGRO_MOUSE_STATE state;
+
 
 	//----------------------TIMER---------------------\\
 
@@ -147,31 +151,27 @@ int main() {
 	al_start_timer(timer);
 
 	//---------------------------TELA---------------------------\\
+
 	// Variáveis do jogo
+
 	bool start = false;
-	bool infect[26]{}; //colorEvent: transformar em array
+	bool infect[26]{}, colorEvent[26]{}, limit[26]{}, hitbox[26]{};
 
-	int colorEvent[26]{};
-	int r[26]{};
-	int g = 153, b = 153;
-	bool limit[26]{};
+	int r[26]{}, g[26]{}, b[26]{};
+	int min = 0, seg = 0, point = 0, x = 0, y = 0;
 
-
-	//--------VARIÁVEIS PARA CRIAR OS ELEMENTOS DO JOGO--------\\
-
-	int min = 0, seg = 0, intPoint = 0;
-	const char point = intPoint + '0';
-	bool select = false;
-
-	//TESTE
+	// Inputar os valores nas variáveis que precisam
 	for (int i = 0; i < 26; i++) {
 
 		r[i] = 153;
+		g[i] = 153;
+		b[i] = 153;
+
 		limit[i] = false;
 		infect[i] = false;
 		colorEvent[i] = false;
+		hitbox[i] = false;
 
-		select = false;
 	}
 
 	while (1) {
@@ -179,6 +179,7 @@ int main() {
 		bool openStore = false;
 
 		//---------Evento para fechar a tela---------\\
+	
 		// Espera o evento para fechar tela
 
 		al_wait_for_event(queue, &event);
@@ -190,41 +191,38 @@ int main() {
 
 		al_draw_bitmap(background, 0, 0, 0);
 
-		al_draw_tinted_bitmap(rs, al_map_rgb(r[0], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(sc, al_map_rgb(r[1], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(pr, al_map_rgb(r[2], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(sp, al_map_rgb(r[3], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(mg, al_map_rgb(r[4], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(rj, al_map_rgb(r[5], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(es, al_map_rgb(r[6], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ba, al_map_rgb(r[7], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(pi, al_map_rgb(r[8], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ma, al_map_rgb(r[9], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ce, al_map_rgb(r[10], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(rn, al_map_rgb(r[11], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(pb, al_map_rgb(r[12], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(pe, al_map_rgb(r[13], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(al, al_map_rgb(r[14], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(se, al_map_rgb(r[15], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ac, al_map_rgb(r[16], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ro, al_map_rgb(r[17], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(am, al_map_rgb(r[18], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(rr, al_map_rgb(r[19], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(pa, al_map_rgb(r[20], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ap, al_map_rgb(r[21], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(to, al_map_rgb(r[22], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(mt, al_map_rgb(r[23], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(go, al_map_rgb(r[24], g, b), 0, 0, 0);
-		al_draw_tinted_bitmap(ms, al_map_rgb(r[25], g, b), 0, 0, 0);
+		al_draw_tinted_bitmap(rs, al_map_rgb(r[0], g[0], b[0]), 0, 0, 0);
+		al_draw_tinted_bitmap(sc, al_map_rgb(r[1], g[1], b[1]), 0, 0, 0);
+		al_draw_tinted_bitmap(pr, al_map_rgb(r[2], g[2], b[2]), 0, 0, 0);
+		al_draw_tinted_bitmap(sp, al_map_rgb(r[3], g[3], b[3]), 0, 0, 0);
+		al_draw_tinted_bitmap(mg, al_map_rgb(r[4], g[4], b[4]), 0, 0, 0);
+		al_draw_tinted_bitmap(rj, al_map_rgb(r[5], g[5], b[5]), 0, 0, 0);
+		al_draw_tinted_bitmap(es, al_map_rgb(r[6], g[6], b[6]), 0, 0, 0);
+		al_draw_tinted_bitmap(ba, al_map_rgb(r[7], g[7], b[7]), 0, 0, 0);
+		al_draw_tinted_bitmap(pi, al_map_rgb(r[8], g[8], b[8]), 0, 0, 0);
+		al_draw_tinted_bitmap(ma, al_map_rgb(r[9], g[9], b[9]), 0, 0, 0);
+		al_draw_tinted_bitmap(rn, al_map_rgb(r[11], g[11], b[10]), 0, 0, 0);
+		al_draw_tinted_bitmap(pb, al_map_rgb(r[12], g[12], b[11]), 0, 0, 0);
+		al_draw_tinted_bitmap(ce, al_map_rgb(r[10], g[10], b[12]), 0, 0, 0);
+		al_draw_tinted_bitmap(pe, al_map_rgb(r[13], g[13], b[13]), 0, 0, 0);
+		al_draw_tinted_bitmap(al, al_map_rgb(r[14], g[14], b[14]), 0, 0, 0);
+		al_draw_tinted_bitmap(se, al_map_rgb(r[15], g[15], b[15]), 0, 0, 0);
+		al_draw_tinted_bitmap(ac, al_map_rgb(r[16], g[16], b[16]), 0, 0, 0);
+		al_draw_tinted_bitmap(ro, al_map_rgb(r[17], g[17], b[17]), 0, 0, 0);
+		al_draw_tinted_bitmap(am, al_map_rgb(r[18], g[18], b[18]), 0, 0, 0);
+		al_draw_tinted_bitmap(rr, al_map_rgb(r[19], g[19], b[19]), 0, 0, 0);
+		al_draw_tinted_bitmap(pa, al_map_rgb(r[20], g[20], b[20]), 0, 0, 0);
+		al_draw_tinted_bitmap(ap, al_map_rgb(r[21], g[21], b[21]), 0, 0, 0);
+		al_draw_tinted_bitmap(to, al_map_rgb(r[22], g[22], b[22]), 0, 0, 0);
+		al_draw_tinted_bitmap(mt, al_map_rgb(r[23], g[23], b[23]), 0, 0, 0);
+		al_draw_tinted_bitmap(go, al_map_rgb(r[24], g[24], b[24]), 0, 0, 0);
+		al_draw_tinted_bitmap(ms, al_map_rgb(r[25], g[25], b[25]), 0, 0, 0);
 
 		//---------Evento para escolher estado---------\\
 
 		if (event.type == ALLEGRO_EVENT_TIMER) {
-			seg++;
 
-			// Pontuação
-			if (seg == 15)
-				intPoint++;
+			seg++;
 
 			if (seg == 60) {
 
@@ -232,11 +230,23 @@ int main() {
 				seg = 0;
 			}
 
+			// Pontuação
+			if (seg == 15)
+				point++;
+
+			if (seg % 1 == 0) {
+				event.mouse.x = event.mouse.x;
+				event.mouse.y = event.mouse.y;
+			}
+
+
 			if (start == true) {
 
 				for (int i = 0; i < 26; i++) {
 					if (colorEvent[i] == true && infect[i] == true) {
 						r[i] = 0;
+						g[i] = 0;
+						b[i] = 0;
 					}
 
 					colorEvent[i] = false;
@@ -252,41 +262,56 @@ int main() {
 						limit[i] = true;
 				}
 			}
-
 		}
-		
 
 		al_draw_bitmap(contorno, 0, 0, 0);
 
-		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) { //720, 400, 830.0, 500.0
+		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
 
+			//MT
 			if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
 				event.mouse.y >= 400 && event.mouse.y <= 500) {
 
-				infect[23] = true;
-				colorEvent[23] = true;
-				select = true;
+				hitbox[23] = true;
 				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
-				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Evento funcionou");
+
+			}
+
+			//MS
+			else if (event.mouse.x >= 750 && event.mouse.x <= 830 &&
+				event.mouse.y >= 520 && event.mouse.y <= 610) {
+
+				hitbox[25] = true;
+				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
+
+			}
+
+			//PA
+
+			else if (event.mouse.x >= 770 && event.mouse.x <= 880.0 &&
+				event.mouse.y >= 260 && event.mouse.y <= 370.0) {
+
+				hitbox[20] = true;
+				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
 
 			}
 
 			else {
 
 				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
-				select = false;
 				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Select False");
 			}
 		}
 
-		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-
-			if (select == true) {
+		for (int i = 0; i < 26; i++)
+			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP && hitbox[i] == true) {
 
 				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
+
+				infect[i] = true;
+				colorEvent[i] = true;
 				start = true;
 			}
-		}
 
 		//-----------Evento para abrir a loja-----------\\
 	 
@@ -303,8 +328,65 @@ int main() {
 			atualizar_janela(openStore, queue, event, timeout, store, font);
 		}
 
+		/*
 		al_draw_rectangle(720, 400, 830.0, 500.0, al_map_rgb(255, 0, 255), 2.0); //MT
+
+		al_draw_rectangle(750, 520, 830.0, 610, al_map_rgb(255, 0, 255), 2.0); //MS
+
+		al_draw_rectangle(770, 260, 880.0, 370.0, al_map_rgb(255, 0, 255), 2.0); //PA
+
+		al_draw_rectangle(570, 260, 730.0, 365.0, al_map_rgb(255, 0, 255), 2.0); //AM
+
+		al_draw_rectangle(640, 380, 710, 465, al_map_rgb(255, 0, 255), 2.0); //RO
+
+		al_draw_rectangle(670, 150, 730.0, 250, al_map_rgb(255, 0, 255), 2.0); //RR
+
+		al_draw_rectangle(810, 150, 870.0, 250, al_map_rgb(255, 0, 255), 2.0); //AP
+
 		al_draw_rectangle(920, 500, 1000, 580, al_map_rgb(255, 0, 255), 2.0); //MG
+
+		al_draw_rectangle(850, 460, 910, 530, al_map_rgb(255, 0, 255), 2.0); //GO
+
+		al_draw_rectangle(870, 380, 920, 450, al_map_rgb(255, 0, 255), 2.0); //TO
+
+		al_draw_rectangle(920, 300, 965, 345, al_map_rgb(255, 0, 255), 2.0); //MA
+
+		al_draw_rectangle(1015, 300, 1055, 345, al_map_rgb(255, 0, 255), 2.0); //CE
+
+		al_draw_rectangle(940, 415, 1040, 470, al_map_rgb(255, 0, 255), 2.0); //BA
+
+		al_draw_rectangle(550, 380, 610, 420, al_map_rgb(255, 0, 255), 2.0); //AC
+		al_draw_rectangle(490, 360, 550, 420, al_map_rgb(255, 0, 255), 2.0); //AC
+
+		al_draw_rectangle(960, 350, 1020, 385, al_map_rgb(255, 0, 255), 2.0); //PI
+		al_draw_rectangle(980, 300, 1005, 345, al_map_rgb(255, 0, 255), 2.0); //CE
+
+		al_draw_rectangle(750, 705, 870.0, 780, al_map_rgb(255, 0, 255), 2.0); //RS
+
+		al_draw_rectangle(840, 660, 900.0, 700, al_map_rgb(255, 0, 255), 2.0); //SC
+
+		al_draw_rectangle(810, 611, 900.0, 660, al_map_rgb(255, 0, 255), 2.0); //PR
+
+		al_draw_rectangle(1000, 611, 1080.0, 710, al_map_rgb(255, 0, 255), 2.0); //RJ
+
+		al_draw_rectangle(1070, 520, 1170, 600, al_map_rgb(255, 0, 255), 2.0); //ES
+
+		al_draw_rectangle(1100, 425, 1165, 470, al_map_rgb(255, 0, 255), 2.0); //SE
+
+		al_draw_rectangle(1200, 350, 1260, 385, al_map_rgb(255, 0, 255), 2.0); //PE
+
+		al_draw_rectangle(1160, 310, 1215, 345, al_map_rgb(255, 0, 255), 2.0); //PB
+
+		al_draw_rectangle(1130, 250, 1200, 300, al_map_rgb(255, 0, 255), 2.0); //RN
+		*/
+
+		// Desenhar o icone de pontuação
+		al_draw_bitmap(bioIcon, 30, 795, 0);
+
+		// Desenhar a pontuação
+		char str[1000];
+		sprintf(str, "DNA: %d", point);
+		al_draw_text(pointFont, al_map_rgb(255, 0, 110), 160, 835, ALLEGRO_ALIGN_LEFT, str);
 
 		// Atualiza a tela quando tiver algo para mostrar
 		al_flip_display();
