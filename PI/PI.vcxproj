@@ -143,6 +143,7 @@
     <ClCompile Include="compraLoja.cpp" />
     <ClCompile Include="Janela.cpp" />
     <ClCompile Include="PI.cpp" />
+    <ClCompile Include="pontuacao.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="compraLoja.h" />
     <ClInclude Include="Janela.h" />
+    <ClInclude Include="pontuacao.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

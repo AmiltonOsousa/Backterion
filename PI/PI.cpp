@@ -8,6 +8,9 @@
 #include <stdbool.h>
 #include "./Janela.h"
 #include "./selecaoEstado.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include "./pontuacao.h"
 
 
 // Variáveis globais
@@ -60,6 +63,9 @@ int init() {
 		return -1;
 	}
 
+	al_install_audio();
+	al_init_acodec_addon();
+
 	return 0;
 }
 
@@ -95,6 +101,19 @@ int main() {
 	// Variável representando o icone da pontuação
 	ALLEGRO_BITMAP* bioIcon = al_load_bitmap("bioIcon.png");
 
+	// Variável representando o sample
+	ALLEGRO_SAMPLE* sample = NULL;
+	ALLEGRO_SAMPLE_INSTANCE* instance1 = NULL;
+
+	//---------------Samples e instâncias--------------\\
+
+	al_reserve_samples(1);
+
+	sample = al_load_sample("background_music.wav");
+	instance1 = al_create_sample_instance(sample);
+
+	al_set_sample_instance_playmode(instance1, ALLEGRO_PLAYMODE_LOOP);
+	al_attach_sample_instance_to_mixer(instance1, al_get_default_mixer());
 
 	// Estados
 
@@ -141,7 +160,7 @@ int main() {
 
 	ALLEGRO_EVENT event;
 	ALLEGRO_TIMEOUT timeout{};
-	ALLEGRO_MOUSE_STATE state;
+	ALLEGRO_MOUSE_STATE state{};
 
 
 	//----------------------TIMER---------------------\\
@@ -158,7 +177,7 @@ int main() {
 	bool infect[26]{}, colorEvent[26]{}, limit[26]{}, hitbox[26]{};
 
 	int r[26]{}, g[26]{}, b[26]{};
-	int min = 0, seg = 0, point = 0, x = 0, y = 0;
+	int min = 0, seg = 0, point = 0, x = 0, y = 0, cura = 1200;
 
 	// Inputar os valores nas variáveis que precisam
 	for (int i = 0; i < 26; i++) {
@@ -173,6 +192,9 @@ int main() {
 		hitbox[i] = false;
 
 	}
+
+	// Tocar a música
+	al_play_sample_instance(instance1);
 
 	while (1) {
 
@@ -218,6 +240,10 @@ int main() {
 		al_draw_tinted_bitmap(go, al_map_rgb(r[24], g[24], b[24]), 0, 0, 0);
 		al_draw_tinted_bitmap(ms, al_map_rgb(r[25], g[25], b[25]), 0, 0, 0);
 
+		al_draw_text(font, al_map_rgb(255, 255, 255), 1200, 810, 0, "Cura");
+		al_draw_filled_rectangle(1200, 835, 1500, 855, al_map_rgb(52, 89, 139));
+		al_draw_filled_rectangle(1200, 835, cura, 855, al_map_rgb(92, 225, 230));
+
 		//---------Evento para escolher estado---------\\
 
 		if (event.type == ALLEGRO_EVENT_TIMER) {
@@ -231,7 +257,7 @@ int main() {
 			}
 
 			// Pontuação
-			if (seg == 15)
+			if(seg % 15 == 0)
 				point++;
 
 			if (seg % 1 == 0) {
@@ -261,6 +287,12 @@ int main() {
 					if (r[i] == 255)
 						limit[i] = true;
 				}
+			}
+
+			if (seg++ && cura < 1500) {
+
+				cura += 1;
+
 			}
 		}
 
@@ -325,7 +357,7 @@ int main() {
 		}
 
 		if (openStore) {
-			atualizar_janela(openStore, queue, event, timeout, store, font);
+			atualizar_janela(openStore, queue, event, timeout, store, font, bioIcon, point, pointFont);
 		}
 
 		/*
@@ -384,9 +416,12 @@ int main() {
 		al_draw_bitmap(bioIcon, 30, 795, 0);
 
 		// Desenhar a pontuação
-		char str[1000];
+		/*char str[1000];
 		sprintf(str, "DNA: %d", point);
 		al_draw_text(pointFont, al_map_rgb(255, 0, 110), 160, 835, ALLEGRO_ALIGN_LEFT, str);
+		*/
+
+		showPoints(point, pointFont);
 
 		// Atualiza a tela quando tiver algo para mostrar
 		al_flip_display();

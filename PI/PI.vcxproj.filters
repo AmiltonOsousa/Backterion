@@ -24,6 +24,9 @@
     <ClCompile Include="compraLoja.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="pontuacao.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -38,6 +41,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClInclude>
     <ClInclude Include="compraLoja.h">
+      <Filter>Arquivos de Origem</Filter>
+    </ClInclude>
+    <ClInclude Include="pontuacao.h">
       <Filter>Arquivos de Origem</Filter>
     </ClInclude>
   </ItemGroup>
