@@ -11,6 +11,8 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include "./pontuacao.h"
+#include "./mouseSelect.h"
+#include "./infeccao.h"
 
 
 // Variáveis globais
@@ -81,6 +83,7 @@ int main() {
 	// Variável representando a fonte
 	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 20, 0);
 	ALLEGRO_FONT* pointFont = al_load_font("BASKVILL.TTF", 40, 0);
+	ALLEGRO_FONT* cure = al_load_font("BASKVILL.TTF", 25, 0);
 	ALLEGRO_FONT* arial = al_load_font("arial.ttf", 20, 0);
 
 	// Variável representando a fila
@@ -174,7 +177,7 @@ int main() {
 	// Variáveis do jogo
 
 	bool start = false;
-	bool infect[26]{}, colorEvent[26]{}, limit[26]{}, hitbox[26]{};
+	bool infect[26]{}, colorEvent[26]{}, limit[26]{}, hitbox[26]{}, clickCancel[26]{};
 
 	int r[26]{}, g[26]{}, b[26]{};
 	int min = 0, seg = 0, point = 0, x = 0, y = 0, cura = 1200;
@@ -190,8 +193,9 @@ int main() {
 		infect[i] = false;
 		colorEvent[i] = false;
 		hitbox[i] = false;
+		clickCancel[i] = false;
 
-	}
+	}	
 
 	// Tocar a música
 	al_play_sample_instance(instance1);
@@ -240,7 +244,7 @@ int main() {
 		al_draw_tinted_bitmap(go, al_map_rgb(r[24], g[24], b[24]), 0, 0, 0);
 		al_draw_tinted_bitmap(ms, al_map_rgb(r[25], g[25], b[25]), 0, 0, 0);
 
-		al_draw_text(font, al_map_rgb(255, 255, 255), 1200, 810, 0, "Cura");
+		al_draw_text(cure, al_map_rgb(255, 255, 255), 1200, 810, 0, "Cura");
 		al_draw_filled_rectangle(1200, 835, 1500, 855, al_map_rgb(52, 89, 139));
 		al_draw_filled_rectangle(1200, 835, cura, 855, al_map_rgb(92, 225, 230));
 
@@ -260,12 +264,6 @@ int main() {
 			if(seg % 15 == 0)
 				point++;
 
-			if (seg % 1 == 0) {
-				event.mouse.x = event.mouse.x;
-				event.mouse.y = event.mouse.y;
-			}
-
-
 			if (start == true) {
 
 				for (int i = 0; i < 26; i++) {
@@ -274,7 +272,6 @@ int main() {
 						g[i] = 0;
 						b[i] = 0;
 					}
-
 					colorEvent[i] = false;
 				}
 			}
@@ -289,60 +286,47 @@ int main() {
 				}
 			}
 
-			if (seg++ && cura < 1500) {
-
+			if (seg++ && cura < 1500)
 				cura += 1;
-
-			}
 		}
 
 		al_draw_bitmap(contorno, 0, 0, 0);
 
-		if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+		// Mudar o cursor ao entrar na área do estado
+		mouseSelect(event, display);
 
-			//MT
+		// Seleção para infectar
+		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+
 			if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
 				event.mouse.y >= 400 && event.mouse.y <= 500) {
 
 				hitbox[23] = true;
 				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
-
 			}
 
-			//MS
 			else if (event.mouse.x >= 750 && event.mouse.x <= 830 &&
-				event.mouse.y >= 520 && event.mouse.y <= 610) {
+					 event.mouse.y >= 520 && event.mouse.y <= 610) {
 
 				hitbox[25] = true;
 				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
 
 			}
 
-			//PA
-
-			else if (event.mouse.x >= 770 && event.mouse.x <= 880.0 &&
-				event.mouse.y >= 260 && event.mouse.y <= 370.0) {
-
-				hitbox[20] = true;
-				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
-
-			}
-
-			else {
-
-				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
-				al_draw_text(font, al_map_rgb(255, 0, 0), 10, 10, ALLEGRO_ALIGN_LEFT, "Select False");
-			}
-		}
-
-		for (int i = 0; i < 26; i++)
-			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP && hitbox[i] == true) {
-
 				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
 
-				infect[i] = true;
-				colorEvent[i] = true;
-				start = true;
+				for (int i = 0; i < 26; i++) {
+
+					if (hitbox[i] == true) {
+						infect[i] = true;
+
+						if(clickCancel[i] == false) {
+							colorEvent[i] = true;
+							clickCancel[i] = true;
+						}
+					}
+					start = true;
+				}
 			}
 
 		//-----------Evento para abrir a loja-----------\\
@@ -356,9 +340,8 @@ int main() {
 				openStore = false;
 		}
 
-		if (openStore) {
+		if (openStore)
 			atualizar_janela(openStore, queue, event, timeout, store, font, bioIcon, point, pointFont);
-		}
 
 		/*
 		al_draw_rectangle(720, 400, 830.0, 500.0, al_map_rgb(255, 0, 255), 2.0); //MT
@@ -415,12 +398,6 @@ int main() {
 		// Desenhar o icone de pontuação
 		al_draw_bitmap(bioIcon, 30, 795, 0);
 
-		// Desenhar a pontuação
-		/*char str[1000];
-		sprintf(str, "DNA: %d", point);
-		al_draw_text(pointFont, al_map_rgb(255, 0, 110), 160, 835, ALLEGRO_ALIGN_LEFT, str);
-		*/
-
 		showPoints(point, pointFont);
 
 		// Atualiza a tela quando tiver algo para mostrar
@@ -445,6 +422,7 @@ int main() {
 
 	// Finalizar a fonte
 	al_destroy_font(font);
+	al_destroy_font(pointFont);
 
 	al_destroy_bitmap(rs);
 	al_destroy_bitmap(sc);

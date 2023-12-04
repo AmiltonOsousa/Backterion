@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="compraLoja.cpp" />
     <ClCompile Include="Janela.cpp" />
+    <ClCompile Include="mouseSelect.cpp" />
     <ClCompile Include="PI.cpp" />
     <ClCompile Include="pontuacao.cpp" />
   </ItemGroup>
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="compraLoja.h" />
     <ClInclude Include="Janela.h" />
+    <ClInclude Include="mouseSelect.h" />
     <ClInclude Include="pontuacao.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

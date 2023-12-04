@@ -31,6 +31,7 @@ void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT 
 		
 		// ------------- Sintomas ------------- \\
 
+		/*
 		al_draw_rectangle(158, 326, 216, 416, al_map_rgb(255, 255, 255), 2.0); // febre
 
 		al_draw_rectangle(240, 371, 294, 459, al_map_rgb(255, 255, 255), 2.0); // gripe
@@ -60,6 +61,7 @@ void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT 
 		al_draw_rectangle(1185, 621, 1235, 706, al_map_rgb(255, 255, 255), 2.0);
 
 		al_draw_rectangle(1265, 664, 1315, 749, al_map_rgb(255, 255, 255), 2.0);
+		*/
 
 
 		// ------------- Eventos de Sintomas ------------- \\
@@ -164,7 +166,7 @@ void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT 
 
 		// Desenhar icone 
 		al_draw_bitmap(bioIcon, 30, 795, 0);
-
+	
 		showPoints(point, pointFont);
 
 		al_flip_display();
