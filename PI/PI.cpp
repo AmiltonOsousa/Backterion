@@ -632,65 +632,99 @@ int main() {
 
 			al_draw_rectangle(130, 290, 185, 380, al_map_rgb(255, 255, 255), 2.0); // gripe
 
-			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+			// gripe
+			if (event.mouse.x >= 130 && event.mouse.x <= 185 &&
+				event.mouse.y >= 290 && event.mouse.y <= 380) {
 
-				if (event.mouse.x >= 130 && event.mouse.x <= 185 &&
-					event.mouse.y >= 290 && event.mouse.y <= 380) {
-
-					if (bought[0] == false && point >= 15) {
-						point -= 20;
-						velocidade--;
-						bought[0] = true;
-					}				
-
+				if (bought[0] == false && point >= 25) {
+					point -= 25;
+					velocidade -= 2;
+					bought[0] = true;
 				}
 
-				if (event.mouse.x >= 240 && event.mouse.x <= 294 &&
-					event.mouse.y >= 371 && event.mouse.y <= 459) {
+			}
 
+			// febre
+			if (event.mouse.x >= 240 && event.mouse.x <= 294 &&
+				event.mouse.y >= 290 && event.mouse.y <= 380) {
 
-					if (bought[1] == false && point >= 15) {
-						point -= 15;
-						velocidade--;
-						bought[0] = true;
-					}
-
+				if (bought[1] == false && point >= 15) {
+					point -= 15;
+					velocidade--;
+					bought[1] = true;
 				}
 
-				if (event.mouse.x >= 315 && event.mouse.x <= 373 &&
-					event.mouse.y >= 415 && event.mouse.y <= 500) {
+			}
 
-					openStore = false;
+			// Anemia
+			if (event.mouse.x >= 320 && event.mouse.x <= 373 &&
+				event.mouse.y >= 245 && event.mouse.y <= 335) {
 
+				if (bought[2] == false && point >= 30) {
+					point -= 30;
+					velocidade--;
+					bought[2] = true;
 				}
 
-				if (event.mouse.x >= 398 && event.mouse.x <= 455 &&
-					event.mouse.y >= 460 && event.mouse.y <= 548) {
+			}
 
-					openStore = false;
+			// Dor de cabeça
+			if (event.mouse.x >= 400 && event.mouse.x <= 455 &&
+				event.mouse.y >= 290 && event.mouse.y <= 380) {
 
+				if (bought[3] == false && point >= 20) {
+					point -= 20;
+					velocidade--;
+					bought[3] = true;
 				}
 
-				if (event.mouse.x >= 475 && event.mouse.x <= 533 &&
-					event.mouse.y >= 505 && event.mouse.y <= 590) {
+			}
 
-					openStore = false;
+			// Encefalite
+			if (event.mouse.x >= 475 && event.mouse.x <= 533 &&
+				event.mouse.y >= 245 && event.mouse.y <= 335) {
 
+				if (bought[4] == false && point >= 20) {
+					point -= 20;
+					velocidade--;
+					bought[4] = true;
 				}
 
-				if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
-					event.mouse.y >= 550 && event.mouse.y <= 635) {
+			}
 
-					openStore = false;
+			// Coma
+			if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+				event.mouse.y >= 200 && event.mouse.y <= 290) {
 
+				if (bought[5] == false && point >= 45) {
+					point -= 45;
+					velocidade -= 3;
+					bought[5] = true;
+				}
+
+			}
+
+			// Ataque Cardiaco
+			if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+				event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+				if (bought[6] == false && point >= 50) {
+					point -= 50;
+					velocidade -= 3;
+					bought[6] = true;
 				}
 
 				// ------------- Eventos de Transmissão ------------- \\
 
-				if (event.mouse.x >= 1050 && event.mouse.x <= 1101 &&
-					event.mouse.y >= 268 && event.mouse.y <= 345) {
+				// água 2
+				if (event.mouse.x >= 930 && event.mouse.x <= 975 &&
+					event.mouse.y >= 250 && event.mouse.y <= 330) {
 
-					openStore = false;
+					if (bought[7] == false && point >= 100) {
+						point -= 100;
+						velocidade -= 5;
+						bought[7] = true;
+					}
 
 				}
 
