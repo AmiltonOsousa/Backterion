@@ -53,4 +53,12 @@
       <Filter>Arquivos de Origem</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Nova pasta (4)\PI\HitboxEstado.txt">
+      <Filter>Arquivos de Recurso</Filter>
+    </Text>
+    <Text Include="..\..\Nova pasta (4)\PI\HitBoxLoja.txt">
+      <Filter>Arquivos de Recurso</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

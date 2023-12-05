@@ -293,41 +293,231 @@ int main() {
 		al_draw_bitmap(contorno, 0, 0, 0);
 
 		// Mudar o cursor ao entrar na área do estado
-		mouseSelect(event, display);
+		mouseSelect(event, display, infect);
 
-		// Seleção para infectar
+		//---------------SELEÇÃO PARA INFECTAR-------------------\\
+
 		if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
-			if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
+			//RS
+			if (event.mouse.x >= 750 && event.mouse.x <= 870 &&
+				event.mouse.y >= 705 && event.mouse.y <= 780) {
+
+				hitbox[0] = true;
+			}
+
+			//SC
+			else if (event.mouse.x >= 840 && event.mouse.x <= 900 &&
+				event.mouse.y >= 660 && event.mouse.y <= 700) {
+
+				hitbox[1] = true;
+			}
+
+			//PR
+			else if (event.mouse.x >= 810 && event.mouse.x <= 900 &&
+				event.mouse.y >= 611 && event.mouse.y <= 660) {
+
+				hitbox[2] = true;
+			}
+
+			//SP
+			else if (event.mouse.x >= 845 && event.mouse.x <= 920 &&
+				event.mouse.y >= 570 && event.mouse.y <= 610 ||
+				event.mouse.x >= 880 && event.mouse.x <= 950 &&
+				event.mouse.y >= 610 && event.mouse.y <= 635) {
+
+				hitbox[3] = true;
+			}
+
+			//MG
+			else if (event.mouse.x >= 920 && event.mouse.x <= 1000 &&
+				event.mouse.y >= 500 && event.mouse.y <= 580) {
+
+				hitbox[4] = true;
+			}
+
+			//RJ
+			else if (event.mouse.x >= 1000 && event.mouse.x <= 1080 &&
+				event.mouse.y >= 611 && event.mouse.y <= 710) {
+
+				hitbox[5] = true;
+			}
+
+			//ES
+			else if (event.mouse.x >= 1070 && event.mouse.x <= 1170 &&
+				event.mouse.y >= 520 && event.mouse.y <= 600) {
+
+				hitbox[6] = true;
+			}
+
+			//BA
+			else if (event.mouse.x >= 940 && event.mouse.x <= 1040 &&
+				event.mouse.y >= 415 && event.mouse.y <= 470) {
+
+				hitbox[7] = true;
+			}
+
+			//PI
+			else if (event.mouse.x >= 960 && event.mouse.x <= 1020 &&
+				event.mouse.y >= 350 && event.mouse.y <= 385 ||
+				event.mouse.x >= 980 && event.mouse.x <= 1005 &&
+				event.mouse.y >= 300 && event.mouse.y <= 345) {
+
+				hitbox[8] = true;
+			}
+
+			//MA
+			else if (event.mouse.x >= 920 && event.mouse.x <= 965 &&
+				event.mouse.y >= 300 && event.mouse.y <= 345) {
+
+				hitbox[9] = true;
+			}
+
+			//CE
+			else if (event.mouse.x >= 1015 && event.mouse.x <= 1055 &&
+				event.mouse.y >= 300 && event.mouse.y <= 345) {
+
+				hitbox[10] = true;
+			}
+
+			//RN
+			else if (event.mouse.x >= 1130 && event.mouse.x <= 1200 &&
+				event.mouse.y >= 250 && event.mouse.y <= 300) {
+
+				hitbox[11] = true;
+			}
+
+			//PB
+			else if (event.mouse.x >= 1160 && event.mouse.x <= 1215 &&
+				event.mouse.y >= 310 && event.mouse.y <= 345) {
+
+				hitbox[12] = true;
+			}
+
+			//PE
+			else if (event.mouse.x >= 1200 && event.mouse.x <= 1260 &&
+				event.mouse.y >= 350 && event.mouse.y <= 385) {
+
+				hitbox[13] = true;
+			}
+
+
+			//AL
+			else if (event.mouse.x >= 1130 && event.mouse.x <= 1180 &&
+				event.mouse.y >= 380 && event.mouse.y <= 420) {
+
+				hitbox[14] = true;
+			}
+
+			//SE
+			else if (event.mouse.x >= 1100 && event.mouse.x <= 1165 &&
+				event.mouse.y >= 425 && event.mouse.y <= 470) {
+
+				hitbox[15] = true;
+			}
+
+			//AC
+			else if (event.mouse.x >= 550 && event.mouse.x <= 610 &&
+				event.mouse.y >= 380 && event.mouse.y <= 420 ||
+				event.mouse.x >= 490 && event.mouse.x <= 550 &&
+				event.mouse.y >= 360 && event.mouse.y <= 420) {
+
+				hitbox[16] = true;
+			}
+
+
+			//RO
+			else if (event.mouse.x >= 640 && event.mouse.x <= 710 &&
+				event.mouse.y >= 380 && event.mouse.y <= 465) {
+
+				hitbox[17] = true;
+			}
+
+			//AM
+			else if (event.mouse.x >= 570 && event.mouse.x <= 730 &&
+				event.mouse.y >= 260 && event.mouse.y <= 365.0) {
+
+				hitbox[18] = true;
+			}
+
+			//RR
+			else if (event.mouse.x >= 670 && event.mouse.x <= 730 &&
+				event.mouse.y >= 150 && event.mouse.y <= 250) {
+
+				hitbox[19] = true;
+			}
+
+			//PA
+			else if (event.mouse.x >= 770 && event.mouse.x <= 880.0 &&
+				event.mouse.y >= 260 && event.mouse.y <= 370.0) {
+
+				hitbox[20] = true;
+			}
+
+
+			//AP
+			else if (event.mouse.x >= 810 && event.mouse.x <= 870 &&
+				event.mouse.y >= 150 && event.mouse.y <= 250) {
+
+				hitbox[21] = true;
+			}
+
+			//TO
+			else if (event.mouse.x >= 870 && event.mouse.x <= 920 &&
+				event.mouse.y >= 380 && event.mouse.y <= 450) {
+
+				hitbox[22] = true;
+			}
+
+			//MT
+			else if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
 				event.mouse.y >= 400 && event.mouse.y <= 500) {
 
 				hitbox[23] = true;
-				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
 			}
 
+			//GO
+			else if (event.mouse.x >= 850 && event.mouse.x <= 910 &&
+				event.mouse.y >= 460 && event.mouse.y <= 530) {
+
+				hitbox[24] = true;
+			}
+
+			//MS
 			else if (event.mouse.x >= 750 && event.mouse.x <= 830 &&
-					 event.mouse.y >= 520 && event.mouse.y <= 610) {
+				event.mouse.y >= 520 && event.mouse.y <= 610) {
 
 				hitbox[25] = true;
-				al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
-
 			}
 
-				al_draw_text(font, al_map_rgb(255, 0, 0), 1500, 10, ALLEGRO_ALIGN_RIGHT, "Estado selecionado");
+			for (int i = 0; i < 26; i++) {
 
-				for (int i = 0; i < 26; i++) {
+				if (hitbox[i] == true) {
+					infect[i] = true;
 
-					if (hitbox[i] == true) {
-						infect[i] = true;
-
-						if(clickCancel[i] == false) {
-							colorEvent[i] = true;
-							clickCancel[i] = true;
-						}
+					if (clickCancel[i] == false) {
+						colorEvent[i] = true;
+						clickCancel[i] = true;
 					}
-					start = true;
 				}
+				start = true;
 			}
+		
+
+
+		for (int i = 0; i < 26; i++) {
+
+			if (hitbox[i] == true) {
+				infect[i] = true;
+
+				if(clickCancel[i] == false) {
+					colorEvent[i] = true;
+					clickCancel[i] = true;
+					}
+			}
+				start = true;
+		}
+	}
 
 		//-----------Evento para abrir a loja-----------\\
 	 
@@ -342,58 +532,6 @@ int main() {
 
 		if (openStore)
 			atualizar_janela(openStore, queue, event, timeout, store, font, bioIcon, point, pointFont);
-
-		/*
-		al_draw_rectangle(720, 400, 830.0, 500.0, al_map_rgb(255, 0, 255), 2.0); //MT
-
-		al_draw_rectangle(750, 520, 830.0, 610, al_map_rgb(255, 0, 255), 2.0); //MS
-
-		al_draw_rectangle(770, 260, 880.0, 370.0, al_map_rgb(255, 0, 255), 2.0); //PA
-
-		al_draw_rectangle(570, 260, 730.0, 365.0, al_map_rgb(255, 0, 255), 2.0); //AM
-
-		al_draw_rectangle(640, 380, 710, 465, al_map_rgb(255, 0, 255), 2.0); //RO
-
-		al_draw_rectangle(670, 150, 730.0, 250, al_map_rgb(255, 0, 255), 2.0); //RR
-
-		al_draw_rectangle(810, 150, 870.0, 250, al_map_rgb(255, 0, 255), 2.0); //AP
-
-		al_draw_rectangle(920, 500, 1000, 580, al_map_rgb(255, 0, 255), 2.0); //MG
-
-		al_draw_rectangle(850, 460, 910, 530, al_map_rgb(255, 0, 255), 2.0); //GO
-
-		al_draw_rectangle(870, 380, 920, 450, al_map_rgb(255, 0, 255), 2.0); //TO
-
-		al_draw_rectangle(920, 300, 965, 345, al_map_rgb(255, 0, 255), 2.0); //MA
-
-		al_draw_rectangle(1015, 300, 1055, 345, al_map_rgb(255, 0, 255), 2.0); //CE
-
-		al_draw_rectangle(940, 415, 1040, 470, al_map_rgb(255, 0, 255), 2.0); //BA
-
-		al_draw_rectangle(550, 380, 610, 420, al_map_rgb(255, 0, 255), 2.0); //AC
-		al_draw_rectangle(490, 360, 550, 420, al_map_rgb(255, 0, 255), 2.0); //AC
-
-		al_draw_rectangle(960, 350, 1020, 385, al_map_rgb(255, 0, 255), 2.0); //PI
-		al_draw_rectangle(980, 300, 1005, 345, al_map_rgb(255, 0, 255), 2.0); //CE
-
-		al_draw_rectangle(750, 705, 870.0, 780, al_map_rgb(255, 0, 255), 2.0); //RS
-
-		al_draw_rectangle(840, 660, 900.0, 700, al_map_rgb(255, 0, 255), 2.0); //SC
-
-		al_draw_rectangle(810, 611, 900.0, 660, al_map_rgb(255, 0, 255), 2.0); //PR
-
-		al_draw_rectangle(1000, 611, 1080.0, 710, al_map_rgb(255, 0, 255), 2.0); //RJ
-
-		al_draw_rectangle(1070, 520, 1170, 600, al_map_rgb(255, 0, 255), 2.0); //ES
-
-		al_draw_rectangle(1100, 425, 1165, 470, al_map_rgb(255, 0, 255), 2.0); //SE
-
-		al_draw_rectangle(1200, 350, 1260, 385, al_map_rgb(255, 0, 255), 2.0); //PE
-
-		al_draw_rectangle(1160, 310, 1215, 345, al_map_rgb(255, 0, 255), 2.0); //PB
-
-		al_draw_rectangle(1130, 250, 1200, 300, al_map_rgb(255, 0, 255), 2.0); //RN
-		*/
 
 		// Desenhar o icone de pontuação
 		al_draw_bitmap(bioIcon, 30, 795, 0);

@@ -31,37 +31,51 @@ void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT 
 		
 		// ------------- Sintomas ------------- \\
 
-		/*
-		al_draw_rectangle(158, 326, 216, 416, al_map_rgb(255, 255, 255), 2.0); // febre
+		
+		al_draw_rectangle(130, 290, 185, 380, al_map_rgb(255, 255, 255), 2.0); // gripe
 
-		al_draw_rectangle(240, 371, 294, 459, al_map_rgb(255, 255, 255), 2.0); // gripe
+		al_draw_rectangle(240, 290, 294, 380, al_map_rgb(255, 255, 255), 2.0); // febre
 
-		al_draw_rectangle(315, 415, 373, 500, al_map_rgb(255, 255, 255), 2.0); // anemia
+		al_draw_rectangle(320, 245, 373, 335, al_map_rgb(255, 255, 255), 2.0); // anemia
 
-		al_draw_rectangle(398, 460, 455, 548, al_map_rgb(255, 255, 255), 2.0); // dor de cabeça
+		al_draw_rectangle(400, 290, 455, 380, al_map_rgb(255, 255, 255), 2.0); // dor de cabeça
 
-		al_draw_rectangle(475, 505, 533, 590, al_map_rgb(255, 255, 255), 2.0); // Encefalite
+		al_draw_rectangle(475, 245, 533, 335, al_map_rgb(255, 255, 255), 2.0); // Encefalite
 
-		al_draw_rectangle(555, 550, 613, 635, al_map_rgb(255, 255, 255), 2.0); // coma
+		al_draw_rectangle(555, 200, 613, 290, al_map_rgb(255, 255, 255), 2.0); // coma
+
+		al_draw_rectangle(555, 290, 613, 380, al_map_rgb(255, 255, 255), 2.0); // ataque cardiaco
 
 		// ------------- Transmissão ------------- \\
 
-		al_draw_rectangle(1050, 268, 1101, 345, al_map_rgb(255, 255, 255), 2.0); // água
+		al_draw_rectangle(930, 250, 975, 330, al_map_rgb(255, 255, 255), 2.0); // água 2
+		al_draw_rectangle(1000, 210, 1050, 285, al_map_rgb(255, 255, 255), 2.0); // água 1
 
-		al_draw_rectangle(1148, 268, 1198, 345, al_map_rgb(255, 255, 255), 2.0); // vento
+		al_draw_rectangle(1090, 210, 1150, 285, al_map_rgb(255, 255, 255), 2.0); // vento 1
+		al_draw_rectangle(1090, 285, 1150, 365, al_map_rgb(255, 255, 255), 2.0); // vento 2
 
-		al_draw_rectangle(1245, 268, 1292, 345, al_map_rgb(255, 255, 255), 2.0); // alimentos
+
+		al_draw_rectangle(1190, 210, 1245, 282, al_map_rgb(255, 255, 255), 2.0); // alimentos 1
+		al_draw_rectangle(1260, 250, 1315, 325, al_map_rgb(255, 255, 255), 2.0); // alimentos 1
+
+		al_draw_rectangle(1355, 250, 1410, 325, al_map_rgb(255, 255, 255), 2.0); // inseto 1 
+		al_draw_rectangle(1355, 327, 1410, 405, al_map_rgb(255, 255, 255), 2.0); // inseto 2
 
 		// ------------- Citologia ------------- \\
 
-		al_draw_rectangle(1003, 578, 1054, 663, al_map_rgb(255, 255, 255), 2.0);
+		al_draw_rectangle(920, 590, 975, 675, al_map_rgb(255, 255, 255), 2.0); // Citoplasma
 
-		al_draw_rectangle(1084, 621, 1135, 706, al_map_rgb(255, 255, 255), 2.0);
+		al_draw_rectangle(1025, 590, 1075, 675, al_map_rgb(255, 255, 255), 2.0); // Ribossomo
 
-		al_draw_rectangle(1185, 621, 1235, 706, al_map_rgb(255, 255, 255), 2.0);
+		al_draw_rectangle(1130, 590, 1185, 675, al_map_rgb(255, 255, 255), 2.0); // Nucléolo
 
-		al_draw_rectangle(1265, 664, 1315, 749, al_map_rgb(255, 255, 255), 2.0);
-		*/
+		al_draw_rectangle(1210, 635, 1265, 720, al_map_rgb(255, 255, 255), 2.0); // Mitocondria
+
+		al_draw_rectangle(1315, 635, 1370, 720, al_map_rgb(255, 255, 255), 2.0); // Parede Celular
+
+		al_draw_rectangle(1390, 675, 1450, 765, al_map_rgb(255, 255, 255), 2.0); // Núcleo
+
+		
 
 
 		// ------------- Eventos de Sintomas ------------- \\

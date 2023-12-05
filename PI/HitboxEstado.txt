@@ -1,0 +1,57 @@
+
+		-------------------------HITBOX DOS ESTADOS-----------------------------
+
+		al_draw_rectangle(720, 400, 830.0, 500.0, al_map_rgb(255, 0, 255), 2.0); //MT
+
+		al_draw_rectangle(750, 520, 830.0, 610, al_map_rgb(255, 0, 255), 2.0); //MS
+
+		al_draw_rectangle(770, 260, 880.0, 370.0, al_map_rgb(255, 0, 255), 2.0); //PA
+
+		al_draw_rectangle(570, 260, 730.0, 365.0, al_map_rgb(255, 0, 255), 2.0); //AM
+
+		al_draw_rectangle(640, 380, 710, 465, al_map_rgb(255, 0, 255), 2.0); //RO
+
+		al_draw_rectangle(670, 150, 730.0, 250, al_map_rgb(255, 0, 255), 2.0); //RR
+
+		al_draw_rectangle(810, 150, 870.0, 250, al_map_rgb(255, 0, 255), 2.0); //AP
+
+		al_draw_rectangle(920, 500, 1000, 580, al_map_rgb(255, 0, 255), 2.0); //MG
+
+		al_draw_rectangle(850, 460, 910, 530, al_map_rgb(255, 0, 255), 2.0); //GO
+
+		al_draw_rectangle(870, 380, 920, 450, al_map_rgb(255, 0, 255), 2.0); //TO
+
+		al_draw_rectangle(920, 300, 965, 345, al_map_rgb(255, 0, 255), 2.0); //MA
+
+		al_draw_rectangle(1015, 300, 1055, 345, al_map_rgb(255, 0, 255), 2.0); //CE
+
+		al_draw_rectangle(940, 415, 1040, 470, al_map_rgb(255, 0, 255), 2.0); //BA
+
+		al_draw_rectangle(550, 380, 610, 420, al_map_rgb(255, 0, 255), 2.0); //AC
+		al_draw_rectangle(490, 360, 550, 420, al_map_rgb(255, 0, 255), 2.0); //AC
+
+		al_draw_rectangle(960, 350, 1020, 385, al_map_rgb(255, 0, 255), 2.0); //PI
+		al_draw_rectangle(980, 300, 1005, 345, al_map_rgb(255, 0, 255), 2.0); //CE
+
+		al_draw_rectangle(750, 705, 870.0, 780, al_map_rgb(255, 0, 255), 2.0); //RS
+
+		al_draw_rectangle(840, 660, 900.0, 700, al_map_rgb(255, 0, 255), 2.0); //SC
+
+		al_draw_rectangle(810, 611, 900.0, 660, al_map_rgb(255, 0, 255), 2.0); //PR
+
+		al_draw_rectangle(1000, 611, 1080.0, 710, al_map_rgb(255, 0, 255), 2.0); //RJ
+
+		al_draw_rectangle(1070, 520, 1170, 600, al_map_rgb(255, 0, 255), 2.0); //ES
+
+		al_draw_rectangle(1100, 425, 1165, 470, al_map_rgb(255, 0, 255), 2.0); //SE
+
+		al_draw_rectangle(1200, 350, 1260, 385, al_map_rgb(255, 0, 255), 2.0); //PE
+
+		al_draw_rectangle(1160, 310, 1215, 345, al_map_rgb(255, 0, 255), 2.0); //PB
+
+		al_draw_rectangle(1130, 250, 1200, 300, al_map_rgb(255, 0, 255), 2.0); //RN
+
+		al_draw_rectangle(1130, 380, 1180, 420, al_map_rgb(255, 0, 255), 2.0); //AL
+
+		al_draw_rectangle(845, 570, 920, 610, al_map_rgb(255, 0, 255), 2.0); //SP
+		al_draw_rectangle(880, 610, 950, 635, al_map_rgb(255, 0, 255), 2.0); //SP

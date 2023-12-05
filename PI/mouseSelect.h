@@ -5,4 +5,4 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
-void mouseSelect(ALLEGRO_EVENT event, ALLEGRO_DISPLAY *display);
+void mouseSelect(ALLEGRO_EVENT event, ALLEGRO_DISPLAY *display, bool infect[]);
