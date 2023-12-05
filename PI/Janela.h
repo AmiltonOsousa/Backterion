@@ -5,4 +5,4 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
-void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMEOUT timeout, ALLEGRO_BITMAP* store, ALLEGRO_FONT* font, ALLEGRO_BITMAP *bioIcon, int point, ALLEGRO_FONT *pointFont);
+void atualizar_janela(ALLEGRO_EVENT event, ALLEGRO_DISPLAY *display, ALLEGRO_FONT* font);

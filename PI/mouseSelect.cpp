@@ -81,7 +81,7 @@ void mouseSelect(ALLEGRO_EVENT event, ALLEGRO_DISPLAY* display, bool infect[]) {
 
 		//AP
 
-		else if (event.mouse.x >= 810 && event.mouse.x <= 870 &&
+		else if (event.mouse.x >= 550 && event.mouse.x <= 870 &&
 			event.mouse.y >= 150 && event.mouse.y <= 250) {
 
 			if (infect[21] == false)
@@ -196,7 +196,7 @@ void mouseSelect(ALLEGRO_EVENT event, ALLEGRO_DISPLAY* display, bool infect[]) {
 
 		//PR
 
-		else if (event.mouse.x >= 810 && event.mouse.x <= 900 &&
+		else if (event.mouse.x >= 550 && event.mouse.x <= 900 &&
 			event.mouse.y >= 611 && event.mouse.y <= 660) {
 
 			if (infect[2] == false)
@@ -236,7 +236,7 @@ void mouseSelect(ALLEGRO_EVENT event, ALLEGRO_DISPLAY* display, bool infect[]) {
 
 		//PE
 
-		else if (event.mouse.x >= 1200 && event.mouse.x <= 1260 &&
+		else if (event.mouse.x >= 150 && event.mouse.x <= 1260 &&
 			event.mouse.y >= 350 && event.mouse.y <= 385) {
 
 			if (infect[13] == false)
@@ -256,7 +256,7 @@ void mouseSelect(ALLEGRO_EVENT event, ALLEGRO_DISPLAY* display, bool infect[]) {
 
 		//RN
 
-		else if (event.mouse.x >= 1130 && event.mouse.x <= 1200 &&
+		else if (event.mouse.x >= 1130 && event.mouse.x <= 150 &&
 			event.mouse.y >= 250 && event.mouse.y <= 300) {
 
 			if (infect[11] == false)

@@ -81,7 +81,7 @@ int main() {
 	ALLEGRO_DISPLAY* display = al_create_display(SCREEN_W, SCREEN_H);
 
 	// Variável representando a fonte
-	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 20, 0);
+	ALLEGRO_FONT* font = al_load_font("COOPBL.TTF", 80, 0);
 	ALLEGRO_FONT* pointFont = al_load_font("BASKVILL.TTF", 40, 0);
 	ALLEGRO_FONT* cure = al_load_font("BASKVILL.TTF", 25, 0);
 	ALLEGRO_FONT* arial = al_load_font("arial.ttf", 20, 0);
@@ -179,10 +179,11 @@ int main() {
 
 	// Variáveis do jogo
 
-	bool bought[21];
+	int citologia = 1;
+	bool bought[21]{};
 	int precoEstado = 5;
 	int ordem = 0;
-	int velocidade = 3;
+	int velocidade = 25;
 	bool selectState = true;
 	bool start = false;
 	bool infect[26]{}, colorEvent[26]{}, limit[26]{}, hitbox[26]{}, clickCancel[26]{};
@@ -273,8 +274,8 @@ int main() {
 			}
 
 			// Pontuação
-			if(seg % 15 == 0)
-				point++;
+			if (seg % 45 == 0)
+				point++ * citologia;
 
 			if (seg % 30 == 0)
 				selectState = true;
@@ -297,9 +298,7 @@ int main() {
 					infect[i] == 0 && ordem == 1 || infect[i] == 0 && ordem == 2 || infect[i] == 0 && ordem == 3 || infect[i] == 0 && ordem == 4 ||
 					infect[i] == 1 && ordem == 1 || infect[i] == 1 && ordem == 2 || infect[i] == 1 && ordem == 3 || infect[i] == 1 && ordem == 4 ||
 					infect[i] == 5 && ordem == 1 || infect[i] == 5 && ordem == 2 || infect[i] == 5 && ordem == 3 || infect[i] == 5 && ordem == 4)
-						velocidade = 7;
-
-				else velocidade = 7;
+						velocidade = 30;
 
 				if (seg % velocidade == 0 && limit[i] == false && infect[i] == true) {
 
@@ -342,7 +341,7 @@ int main() {
 			}
 
 			//PR
-			else if (event.mouse.x >= 810 && event.mouse.x <= 900 &&
+			else if (event.mouse.x >= 550 && event.mouse.x <= 900 &&
 				event.mouse.y >= 611 && event.mouse.y <= 660 && selectState == true && point >= precoEstado) {
 
 				hitbox[2] = true;
@@ -427,7 +426,7 @@ int main() {
 			}
 
 			//RN
-			else if (event.mouse.x >= 1130 && event.mouse.x <= 1200 &&
+			else if (event.mouse.x >= 1130 && event.mouse.x <= 150 &&
 				event.mouse.y >= 250 && event.mouse.y <= 300 && selectState == true && point >= precoEstado) {
 
 				hitbox[11] = true;
@@ -445,7 +444,7 @@ int main() {
 			}
 
 			//PE
-			else if (event.mouse.x >= 1200 && event.mouse.x <= 1260 &&
+			else if (event.mouse.x >= 150 && event.mouse.x <= 1260 &&
 				event.mouse.y >= 350 && event.mouse.y <= 385 && selectState == true && point >= precoEstado) {
 
 				hitbox[13] = true;
@@ -522,7 +521,7 @@ int main() {
 
 
 			//AP
-			else if (event.mouse.x >= 810 && event.mouse.x <= 870 &&
+			else if (event.mouse.x >= 550 && event.mouse.x <= 870 &&
 				event.mouse.y >= 150 && event.mouse.y <= 250 && selectState == true && point >= precoEstado) {
 
 				hitbox[21] = true;
@@ -579,22 +578,22 @@ int main() {
 				}
 				start = true;
 			}
-		
 
 
-		for (int i = 0; i < 26; i++) {
 
-			if (hitbox[i] == true) {
-				infect[i] = true;
+			for (int i = 0; i < 26; i++) {
 
-				if(clickCancel[i] == false) {
-					colorEvent[i] = true;
-					clickCancel[i] = true;
+				if (hitbox[i] == true) {
+					infect[i] = true;
+
+					if (clickCancel[i] == false) {
+						colorEvent[i] = true;
+						clickCancel[i] = true;
 					}
-			}
+				}
 				start = true;
+			}
 		}
-	}
 
 		//-----------Evento para abrir a loja-----------\\
 	 
@@ -611,6 +610,7 @@ int main() {
 
 		while (openStore) {
 
+			al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
 			int activeEvent = al_wait_for_event_until(queue, &event, &timeout);
 
 			// Evento para fechar no botão
@@ -632,259 +632,533 @@ int main() {
 
 			al_draw_rectangle(130, 290, 185, 380, al_map_rgb(255, 255, 255), 2.0); // gripe
 
-			// gripe
-			if (event.mouse.x >= 130 && event.mouse.x <= 185 &&
-				event.mouse.y >= 290 && event.mouse.y <= 380) {
+			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 
-				if (bought[0] == false && point >= 25) {
-					point -= 25;
-					velocidade -= 2;
-					bought[0] = true;
-				}
+				// gripe
+				if (event.mouse.x >= 130 && event.mouse.x <= 185 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
 
-			}
-
-			// febre
-			if (event.mouse.x >= 240 && event.mouse.x <= 294 &&
-				event.mouse.y >= 290 && event.mouse.y <= 380) {
-
-				if (bought[1] == false && point >= 15) {
-					point -= 15;
-					velocidade--;
-					bought[1] = true;
-				}
-
-			}
-
-			// Anemia
-			if (event.mouse.x >= 320 && event.mouse.x <= 373 &&
-				event.mouse.y >= 245 && event.mouse.y <= 335) {
-
-				if (bought[2] == false && point >= 30) {
-					point -= 30;
-					velocidade--;
-					bought[2] = true;
-				}
-
-			}
-
-			// Dor de cabeça
-			if (event.mouse.x >= 400 && event.mouse.x <= 455 &&
-				event.mouse.y >= 290 && event.mouse.y <= 380) {
-
-				if (bought[3] == false && point >= 20) {
-					point -= 20;
-					velocidade--;
-					bought[3] = true;
-				}
-
-			}
-
-			// Encefalite
-			if (event.mouse.x >= 475 && event.mouse.x <= 533 &&
-				event.mouse.y >= 245 && event.mouse.y <= 335) {
-
-				if (bought[4] == false && point >= 20) {
-					point -= 20;
-					velocidade--;
-					bought[4] = true;
-				}
-
-			}
-
-			// Coma
-			if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
-				event.mouse.y >= 200 && event.mouse.y <= 290) {
-
-				if (bought[5] == false && point >= 45) {
-					point -= 45;
-					velocidade -= 3;
-					bought[5] = true;
-				}
-
-			}
-
-			// Ataque Cardiaco
-			if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
-				event.mouse.y >= 290 && event.mouse.y <= 380) {
-
-				if (bought[6] == false && point >= 50) {
-					point -= 50;
-					velocidade -= 3;
-					bought[6] = true;
-				}
-
-				// ------------- Eventos de Transmissão ------------- \\
-
-				// água 2
-				if (event.mouse.x >= 930 && event.mouse.x <= 975 &&
-					event.mouse.y >= 250 && event.mouse.y <= 330) {
-
-					if (bought[7] == false && point >= 100) {
-						point -= 100;
-						velocidade -= 5;
-						bought[7] = true;
+					if (bought[0] == false && point >= 25) {
+						point -= 25;
+						velocidade -= 2;
+						bought[0] = true;
 					}
 
 				}
 
-				if (event.mouse.x >= 1148 && event.mouse.x <= 1198 &&
-					event.mouse.y >= 268 && event.mouse.y <= 345) {
+				// febre
+				if (event.mouse.x >= 240 && event.mouse.x <= 294 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
 
-					openStore = false;
+					if (bought[1] == false && point >= 15) {
+						point -= 15;
+						velocidade--;
+						bought[1] = true;
+					}
 
 				}
 
-				if (event.mouse.x >= 1245 && event.mouse.x <= 1292 &&
-					event.mouse.y >= 268 && event.mouse.y <= 345) {
+				// Anemia
+				if (event.mouse.x >= 320 && event.mouse.x <= 373 &&
+					event.mouse.y >= 245 && event.mouse.y <= 335) {
 
-					openStore = false;
+					if (bought[2] == false && point >= 30) {
+						point -= 30;
+						velocidade--;
+						bought[2] = true;
+					}
+
+				}
+
+				// Dor de cabeça
+				if (event.mouse.x >= 400 && event.mouse.x <= 455 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					if (bought[3] == false && point >= 20) {
+						point -= 20;
+						velocidade--;
+						bought[3] = true;
+					}
+
+				}
+
+				// Encefalite
+				if (event.mouse.x >= 475 && event.mouse.x <= 533 &&
+					event.mouse.y >= 245 && event.mouse.y <= 335) {
+
+					if (bought[4] == false && point >= 20) {
+						point -= 20;
+						velocidade--;
+						bought[4] = true;
+					}
+
+				}
+
+				// Coma
+				if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+					event.mouse.y >= 200 && event.mouse.y <= 290) {
+
+					if (bought[5] == false && point >= 45) {
+						point -= 45;
+						velocidade -= 3;
+						bought[5] = true;
+					}
+
+				}
+
+				// Ataque Cardiaco
+				if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					if (bought[6] == false && point >= 50) {
+						point -= 50;
+						velocidade -= 3;
+						bought[6] = true;
+					}
+
+					// ------------- Eventos de Transmissão ------------- \\
+
+					// água 2
+					if (event.mouse.x >= 930 && event.mouse.x <= 975 &&
+						event.mouse.y >= 250 && event.mouse.y <= 330) {
+
+						if (bought[7] == false && point >= 100) {
+							point -= 100;
+							velocidade -= 5;
+							bought[7] = true;
+						}
+
+					}
+
+					// água 1
+					if (event.mouse.x >= 1000 && event.mouse.x <= 1050 &&
+						event.mouse.y >= 210 && event.mouse.y <= 285) {
+
+						if (bought[8] == false && point >= 50) {
+							point -= 50;
+							velocidade -= 2;
+							bought[8] = true;
+						}
+
+					}
+
+					 // vento 1
+					if (event.mouse.x >= 1090 && event.mouse.x <= 1150 &&
+						event.mouse.y >= 210 && event.mouse.y <= 285) {
+
+						if (bought[9] == false && point >= 50) {
+							point -= 50;
+							velocidade -= 4;
+							bought[9] = true;
+						}
+
+					}
+
+					// vento 2
+
+					if (event.mouse.x >= 1090 && event.mouse.x <= 1150 &&
+						event.mouse.y >= 285 && event.mouse.y <= 365) {
+
+						if (bought[10] == false && point >= 150) {
+							point -= 150;
+							velocidade -= 8;
+							bought[10] = true;
+						}
+
+					}
+	
+					// alimentos 1
+					if (event.mouse.x >= 1190 && event.mouse.x <= 1245 &&
+						event.mouse.y >= 210 && event.mouse.y <= 282) {
+
+						if (bought[11] == false && point >= 60) {
+							point -= 60;
+							velocidade -= 2;
+							bought[11] = true;
+						}
+
+					}
+
+					// alimentos 2
+					if (event.mouse.x >= 1260 && event.mouse.x <= 1315 &&
+						event.mouse.y >= 250 && event.mouse.y <= 325) {
+
+						if (bought[12] == false && point >= 100) {
+							point -= 100;
+							velocidade -= 2;
+							bought[12] = true;
+						}
+
+					}
+
+					// inseto 1 
+					if (event.mouse.x >= 1355 && event.mouse.x <= 1410 &&
+						event.mouse.y >= 250 && event.mouse.y <= 325) {
+
+						if (bought[13] == false && point >= 60) {
+							point -= 60;
+							velocidade -= 3;
+							bought[13] = true;
+						}
+
+					}
+
+					// inseto 2
+					if (event.mouse.x >= 1355 && event.mouse.x <= 1410 &&
+						event.mouse.y >= 327 && event.mouse.y <= 405) {
+
+						if (bought[14] == false && point >= 70) {
+							point -= 70;
+							velocidade -= 3;
+							bought[14] = true;
+						}
+					}
+
+					// ------------- Eventos de Citologia ------------- \\
+
+					// Citoplasma
+					if (event.mouse.x >= 920 && event.mouse.x <= 975 &&
+						event.mouse.y >= 590 && event.mouse.y <= 675) {
+
+						if (bought[15] == false && point >= 40) {
+							point -= 40;
+							citologia += 0;
+							bought[15] = true;
+						}
+					}
+
+					// Ribossomo
+					if (event.mouse.x >= 1025 && event.mouse.x <= 1075 &&
+						event.mouse.y >= 590 && event.mouse.y <= 675) {
+
+						if (bought[16] == false && point >= 30) {
+							point -= 30;
+							citologia += 1;
+							bought[16] = true;
+						}
+
+					}
+
+					// Nucléolo
+
+					if (event.mouse.x >= 1130 && event.mouse.x <= 1185 &&
+						event.mouse.y >= 590 && event.mouse.y <= 675) {
+
+						if (bought[17] == false && point >= 80) {
+							point -= 80;
+							citologia += 3;
+							bought[17] = true;
+						}
+
+					}
+
+					// Mitocondria
+
+					if (event.mouse.x >= 1265 && event.mouse.x <= 1315 &&
+						event.mouse.y >= 664 && event.mouse.y <= 749) {
+
+						if (bought[18] == false && point >= 80) {
+							point -= 80;
+							citologia += 1;
+							bought[18] = true;
+						}
+
+					}
+
+					// Parede Celular
+
+					if (event.mouse.x >= 1315 && event.mouse.x <= 1370 &&
+						event.mouse.y >= 635 && event.mouse.y <= 720) {
+
+						if (bought[19] == false && point >= 100) {
+							point -= 100;
+							citologia += 0;
+							bought[19] = true;
+						}
+
+					}
+
+					// Núcleo
+					if (event.mouse.x >= 1390 && event.mouse.x <= 1450 &&
+						event.mouse.y >= 675 && event.mouse.y <= 765) {
+
+						if (bought[20] == false && point >= 100) {
+							point -= 100;
+							citologia += 2;
+							bought[20] = true;
+						}
+
+					}
+
+				}
+			}
+
+			// ------------- Mostrar sintomas ------------- \\
+
+			if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+
+				if (event.mouse.x >= 130 && event.mouse.x <= 185 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Gripe");
+					al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
+				}
+
+
+				if (event.mouse.x >= 240 && event.mouse.x <= 294 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Febre");
+					al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK);
+				}
+
+				if (event.mouse.x >= 320 && event.mouse.x <= 373 &&
+					event.mouse.y >= 245 && event.mouse.y <= 335) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Anemia");
+
+				}
+
+				if (event.mouse.x >= 400 && event.mouse.x <= 455 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Dor de Cabeca");
+
+				}
+
+				if (event.mouse.x >= 475 && event.mouse.x <= 533 &&
+					event.mouse.y >= 245 && event.mouse.y <= 335) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Encefalite");
+
+				}
+
+				if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+					event.mouse.y >= 200 && event.mouse.y <= 290) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Coma");
+
+				}
+
+				if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Ataque Cardiaco");
+
+				}
+
+				// ------------- Mostrar Transmissão ------------- \\
+
+				if (event.mouse.x >= 930 && event.mouse.x <= 975 &&
+					event.mouse.y >= 250 && event.mouse.y <= 330) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Agua 2");
+
+				}
+
+				if (event.mouse.x >= 1000 && event.mouse.x <= 1050 &&
+					event.mouse.y >= 210 && event.mouse.y <= 285) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Agua 1");
+
+				}
+
+				if (event.mouse.x >= 1090 && event.mouse.x <= 1150 &&
+					event.mouse.y >= 210 && event.mouse.y <= 285) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Vento 1");
+
+				}
+
+				if (event.mouse.x >= 1090 && event.mouse.x <= 1150 &&
+					event.mouse.y >= 285 && event.mouse.y <= 365) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Vento 2");
+
+				}
+
+				if (event.mouse.x >= 1190 && event.mouse.x <= 1245 &&
+					event.mouse.y >= 210 && event.mouse.y <= 282) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Alimentos 1");
+
+				}
+
+				if (event.mouse.x >= 1260 && event.mouse.x <= 1315 &&
+					event.mouse.y >= 250 && event.mouse.y <= 325) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Alimentos 2");
+
+				}
+
+				if (event.mouse.x >= 1355 && event.mouse.x <= 1410 &&
+					event.mouse.y >= 250 && event.mouse.y <= 325) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Insetos 1");
+
+				}
+
+				if (event.mouse.x >= 1355 && event.mouse.x <= 1410 &&
+					event.mouse.y >= 327 && event.mouse.y <= 405) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Insetos 2");
 
 				}
 
 				// ------------- Eventos de Citologia ------------- \\
 
-				if (event.mouse.x >= 1003 && event.mouse.x <= 1054 &&
-					event.mouse.y >= 578 && event.mouse.y <= 663) {
+				if (event.mouse.x >= 920 && event.mouse.x <= 975 &&
+					event.mouse.y >= 590 && event.mouse.y <= 675) {
 
-					openStore = false;
-
-				}
-
-				if (event.mouse.x >= 1084 && event.mouse.x <= 1135 &&
-					event.mouse.y >= 621 && event.mouse.y <= 706) {
-
-					openStore = false;
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Citoplasma");
 
 				}
 
-				if (event.mouse.x >= 1185 && event.mouse.x <= 1235 &&
-					event.mouse.y >= 621 && event.mouse.y <= 706) {
+				if (event.mouse.x >= 1025 && event.mouse.x <= 1075 &&
+					event.mouse.y >= 590 && event.mouse.y <= 675) {
 
-					openStore = false;
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Ribossomo");
 
 				}
 
-				if (event.mouse.x >= 1265 && event.mouse.x <= 1315 &&
-					event.mouse.y >= 664 && event.mouse.y <= 749) {
+				if (event.mouse.x >= 1130 && event.mouse.x <= 1185 &&
+					event.mouse.y >= 590 && event.mouse.y <= 675) {
 
-					openStore = false;
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Nucleolo");
+
+				}
+
+				if (event.mouse.x >= 1210 && event.mouse.x <= 1265 &&
+					event.mouse.y >= 635 && event.mouse.y <= 720) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Mitocondria");
+
+				}
+
+				if (event.mouse.x >= 1315 && event.mouse.x <= 1370 &&
+					event.mouse.y >= 635 && event.mouse.y <= 720) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Parede Celular");
+
+				}
+
+				if (event.mouse.x >= 1390 && event.mouse.x <= 1450 &&
+					event.mouse.y >= 675 && event.mouse.y <= 765) {
+
+					al_draw_text(font, al_map_rgb(255, 255, 255), 80, 550, 0, "Nucleo");
 
 				}
 			}
 
-			// Desenhar icone 
+				// Desenhar icone 
+				al_draw_bitmap(bioIcon, 30, 795, 0);
+
+				showPoints(point, pointFont);
+
+				al_draw_rectangle(1000, 210, 1050, 285, al_map_rgb(255, 255, 255), 2.0); // água 1
+
+				al_flip_display();
+			}
+
+			//----------------------------------------------------------------
+
+			// Desenhar o icone de pontuação
 			al_draw_bitmap(bioIcon, 30, 795, 0);
 
 			showPoints(point, pointFont);
 
+			if (limit[0] == true &&
+				limit[1] == true &&
+				limit[2] == true &&
+				limit[3] == true &&
+				limit[4] == true &&
+				limit[5] == true &&
+				limit[6] == true &&
+				limit[7] == true &&
+				limit[8] == true &&
+				limit[9] == true &&
+				limit[10] == true &&
+				limit[11] == true &&
+				limit[12] == true &&
+				limit[13] == true &&
+				limit[14] == true &&
+				limit[15] == true &&
+				limit[16] == true &&
+				limit[17] == true &&
+				limit[18] == true &&
+				limit[19] == true &&
+				limit[20] == true &&
+				limit[21] == true &&
+				limit[22] == true &&
+				limit[23] == true &&
+				limit[24] == true &&
+				limit[25] == true) {
+
+
+				al_draw_bitmap(vitoria, 0, 0, 0);
+
+			}
+
+			if (cura >= 1499)
+				while (1) {
+					al_draw_bitmap(derrota, 0, 0, 0);
+
+					if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+						break;
+
+					al_flip_display();
+				}
+
+			// Atualiza a tela quando tiver algo para mostrar
 			al_flip_display();
+
 		}
 
+		//-----------------------DESTROYS------------------------\\
 
+		// Finaliza a janela
+		al_destroy_display(display);
 
+		// Finaliza fila de eventos 
+		al_destroy_event_queue(queue);
 
+		// Finalizar fundo da tela
+		al_destroy_bitmap(background);
 
+		// Finalizar bitmap
+		al_destroy_bitmap(brasil);
+		al_destroy_bitmap(store);
 
-		//----------------------------------------------------------------
+		// Finalizar a fonte
+		al_destroy_font(font);
+		al_destroy_font(pointFont);
 
-		// Desenhar o icone de pontuação
-		al_draw_bitmap(bioIcon, 30, 795, 0);
+		al_destroy_bitmap(rs);
+		al_destroy_bitmap(sc);
+		al_destroy_bitmap(pr);
+		al_destroy_bitmap(sp);
+		al_destroy_bitmap(mg);
+		al_destroy_bitmap(rj);
+		al_destroy_bitmap(es);
+		al_destroy_bitmap(ba);
+		al_destroy_bitmap(pi);
+		al_destroy_bitmap(ma);
+		al_destroy_bitmap(ce);
+		al_destroy_bitmap(rn);
+		al_destroy_bitmap(pb);
+		al_destroy_bitmap(pe);
+		al_destroy_bitmap(al);
+		al_destroy_bitmap(se);
+		al_destroy_bitmap(ac);
+		al_destroy_bitmap(ro);
+		al_destroy_bitmap(am);
+		al_destroy_bitmap(rr);
+		al_destroy_bitmap(pa);
+		al_destroy_bitmap(ap);
+		al_destroy_bitmap(to);
+		al_destroy_bitmap(mt);
+		al_destroy_bitmap(go);
+		al_destroy_bitmap(ms);
 
-		showPoints(point, pointFont);
-
-		if (limit[0] == true &&
-			limit[1] == true &&
-			limit[2] == true &&
-			limit[3] == true &&
-			limit[4] == true &&
-			limit[5] == true &&
-			limit[6] == true &&
-			limit[7] == true &&
-			limit[8] == true &&
-			limit[9] == true &&
-			limit[10] == true &&
-			limit[11] == true &&
-			limit[12] == true &&
-			limit[13] == true &&
-			limit[14] == true &&
-			limit[15] == true &&
-			limit[16] == true &&
-			limit[17] == true &&
-			limit[18] == true &&
-			limit[19] == true &&
-			limit[20] == true &&
-			limit[21] == true &&
-			limit[22] == true &&
-			limit[23] == true &&
-			limit[24] == true &&
-			limit[25] == true) {
-
-			
-			al_draw_bitmap(vitoria, 0, 0, 0);
-			
-		}
-
-		if (cura >= 1499)
-			while (1) {
-				al_draw_bitmap(derrota, 0, 0, 0);
-
-				if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) 
-					break;
-
-				al_flip_display();
-		}
-
-		// Atualiza a tela quando tiver algo para mostrar
-		al_flip_display();
-
-	}
-
-	//-----------------------DESTROYS------------------------\\
-
-	// Finaliza a janela
-	al_destroy_display(display);
-
-	// Finaliza fila de eventos 
-	al_destroy_event_queue(queue);
-
-	// Finalizar fundo da tela
-	al_destroy_bitmap(background);
-
-	// Finalizar bitmap
-	al_destroy_bitmap(brasil);
-	al_destroy_bitmap(store);
-
-	// Finalizar a fonte
-	al_destroy_font(font);
-	al_destroy_font(pointFont);
-
-	al_destroy_bitmap(rs);
-	al_destroy_bitmap(sc);
-	al_destroy_bitmap(pr);
-	al_destroy_bitmap(sp);
-	al_destroy_bitmap(mg);
-	al_destroy_bitmap(rj);
-	al_destroy_bitmap(es);
-	al_destroy_bitmap(ba);
-	al_destroy_bitmap(pi);
-	al_destroy_bitmap(ma);
-	al_destroy_bitmap(ce);
-	al_destroy_bitmap(rn);
-	al_destroy_bitmap(pb);
-	al_destroy_bitmap(pe);
-	al_destroy_bitmap(al);
-	al_destroy_bitmap(se);
-	al_destroy_bitmap(ac);
-	al_destroy_bitmap(ro);
-	al_destroy_bitmap(am);
-	al_destroy_bitmap(rr);
-	al_destroy_bitmap(pa);
-	al_destroy_bitmap(ap);
-	al_destroy_bitmap(to);
-	al_destroy_bitmap(mt);
-	al_destroy_bitmap(go);
-	al_destroy_bitmap(ms);
-
-	return 0;
+		return 0;
 }
