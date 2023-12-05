@@ -10,9 +10,10 @@
 #include <stdbool.h>
 #include "compraLoja.h"
 #include "pontuacao.h"
+#include "./teste.h"
 
 void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT event, ALLEGRO_TIMEOUT timeout, ALLEGRO_BITMAP* store, ALLEGRO_FONT* font, ALLEGRO_BITMAP *bioIcon, int point, ALLEGRO_FONT *pointFont) {
-	
+
 	while (openStore) {
 		int activeEvent = al_wait_for_event_until(queue, &event, &timeout);
 
@@ -74,8 +75,6 @@ void atualizar_janela(bool openStore, ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_EVENT 
 		al_draw_rectangle(1315, 635, 1370, 720, al_map_rgb(255, 255, 255), 2.0); // Parede Celular
 
 		al_draw_rectangle(1390, 675, 1450, 765, al_map_rgb(255, 255, 255), 2.0); // Núcleo
-
-		
 
 
 		// ------------- Eventos de Sintomas ------------- \\
