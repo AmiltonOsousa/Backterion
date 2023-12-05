@@ -145,6 +145,7 @@
     <ClCompile Include="mouseSelect.cpp" />
     <ClCompile Include="PI.cpp" />
     <ClCompile Include="pontuacao.cpp" />
+    <ClCompile Include="teste.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Janela.h" />
     <ClInclude Include="mouseSelect.h" />
     <ClInclude Include="pontuacao.h" />
+    <ClInclude Include="teste.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Nova pasta (4)\PI\HitboxEstado.txt" />

@@ -1,2 +1,10 @@
-﻿  Janela.cpp
-  PI.vcxproj -> C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (5)\x64\Debug\PI.exe
+﻿  PI.cpp
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(296,22): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(296,54): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(296,86): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(296,118): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(299,19): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(299,51): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(299,83): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\PI\PI.cpp(299,115): warning C4806: '==': operação não segura: nenhum valor do tipo 'bool' promovido para tipo 'int' pode se igualar à constante fornecida
+  PI.vcxproj -> C:\Users\amilt\OneDrive\Área de Trabalho\Nova pasta (9) - Copia\x64\Debug\PI.exe

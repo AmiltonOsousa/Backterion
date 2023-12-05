@@ -95,6 +95,9 @@ int main() {
 	// Variável representando a imagem do Brasil
 	ALLEGRO_BITMAP* brasil = al_load_bitmap("brasil.png");
 
+	ALLEGRO_BITMAP* vitoria = al_load_bitmap("vitoria.png");
+	ALLEGRO_BITMAP* derrota = al_load_bitmap("derrota.png");
+
 	// Variável representando o timer
 	ALLEGRO_TIMER* timer = NULL;
 
@@ -176,11 +179,18 @@ int main() {
 
 	// Variáveis do jogo
 
+	bool bought[21];
+	int precoEstado = 5;
+	int ordem = 0;
+	int velocidade = 3;
+	bool selectState = true;
 	bool start = false;
 	bool infect[26]{}, colorEvent[26]{}, limit[26]{}, hitbox[26]{}, clickCancel[26]{};
 
 	int r[26]{}, g[26]{}, b[26]{};
-	int min = 0, seg = 0, point = 0, x = 0, y = 0, cura = 1200;
+	int min = 0, seg = 0, x = 0, y = 0, cura = 1200;
+	
+	int point = 0;
 
 	// Inputar os valores nas variáveis que precisam
 	for (int i = 0; i < 26; i++) {
@@ -195,6 +205,8 @@ int main() {
 		hitbox[i] = false;
 		clickCancel[i] = false;
 
+		if(i < 21)
+			bought[i] = false;
 	}	
 
 	// Tocar a música
@@ -264,6 +276,9 @@ int main() {
 			if(seg % 15 == 0)
 				point++;
 
+			if (seg % 30 == 0)
+				selectState = true;
+
 			if (start == true) {
 
 				for (int i = 0; i < 26; i++) {
@@ -277,7 +292,16 @@ int main() {
 			}
 
 			for (int i = 0; i < 26; i++) {
-				if (seg % 1 == 0 && limit[i] == false && infect[i] == true) {
+
+				if (infect[i] == 3 && ordem == 1 || infect[i] == 3 && ordem == 2 || infect[i] == 3 && ordem == 3 || infect[i] == 3 && ordem == 4 ||
+					infect[i] == 0 && ordem == 1 || infect[i] == 0 && ordem == 2 || infect[i] == 0 && ordem == 3 || infect[i] == 0 && ordem == 4 ||
+					infect[i] == 1 && ordem == 1 || infect[i] == 1 && ordem == 2 || infect[i] == 1 && ordem == 3 || infect[i] == 1 && ordem == 4 ||
+					infect[i] == 5 && ordem == 1 || infect[i] == 5 && ordem == 2 || infect[i] == 5 && ordem == 3 || infect[i] == 5 && ordem == 4)
+						velocidade = 7;
+
+				else velocidade = 7;
+
+				if (seg % velocidade == 0 && limit[i] == false && infect[i] == true) {
 
 					r[i]++;
 
@@ -286,7 +310,7 @@ int main() {
 				}
 			}
 
-			if (seg++ && cura < 1500)
+			if (seg % 10 == 0 && cura < 1500)
 				cura += 1;
 		}
 
@@ -301,199 +325,252 @@ int main() {
 
 			//RS
 			if (event.mouse.x >= 750 && event.mouse.x <= 870 &&
-				event.mouse.y >= 705 && event.mouse.y <= 780) {
+				event.mouse.y >= 705 && event.mouse.y <= 780 && selectState == true && point >= precoEstado) {
 
 				hitbox[0] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//SC
 			else if (event.mouse.x >= 840 && event.mouse.x <= 900 &&
-				event.mouse.y >= 660 && event.mouse.y <= 700) {
+				event.mouse.y >= 660 && event.mouse.y <= 700 && selectState == true && point >= precoEstado) {
 
 				hitbox[1] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//PR
 			else if (event.mouse.x >= 810 && event.mouse.x <= 900 &&
-				event.mouse.y >= 611 && event.mouse.y <= 660) {
+				event.mouse.y >= 611 && event.mouse.y <= 660 && selectState == true && point >= precoEstado) {
 
 				hitbox[2] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//SP
 			else if (event.mouse.x >= 845 && event.mouse.x <= 920 &&
 				event.mouse.y >= 570 && event.mouse.y <= 610 ||
 				event.mouse.x >= 880 && event.mouse.x <= 950 &&
-				event.mouse.y >= 610 && event.mouse.y <= 635) {
+				event.mouse.y >= 610 && event.mouse.y <= 635 && selectState == true && point >= precoEstado) {
 
 				hitbox[3] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//MG
 			else if (event.mouse.x >= 920 && event.mouse.x <= 1000 &&
-				event.mouse.y >= 500 && event.mouse.y <= 580) {
+				event.mouse.y >= 500 && event.mouse.y <= 580 && selectState == true && point >= precoEstado) {
 
 				hitbox[4] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//RJ
 			else if (event.mouse.x >= 1000 && event.mouse.x <= 1080 &&
-				event.mouse.y >= 611 && event.mouse.y <= 710) {
+				event.mouse.y >= 611 && event.mouse.y <= 710 && selectState == true && point >= precoEstado) {
 
 				hitbox[5] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//ES
 			else if (event.mouse.x >= 1070 && event.mouse.x <= 1170 &&
-				event.mouse.y >= 520 && event.mouse.y <= 600) {
+				event.mouse.y >= 520 && event.mouse.y <= 600 && selectState == true && point >= precoEstado) {
 
 				hitbox[6] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//BA
 			else if (event.mouse.x >= 940 && event.mouse.x <= 1040 &&
-				event.mouse.y >= 415 && event.mouse.y <= 470) {
+				event.mouse.y >= 415 && event.mouse.y <= 470 && selectState == true && point >= precoEstado) {
 
 				hitbox[7] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//PI
 			else if (event.mouse.x >= 960 && event.mouse.x <= 1020 &&
 				event.mouse.y >= 350 && event.mouse.y <= 385 ||
 				event.mouse.x >= 980 && event.mouse.x <= 1005 &&
-				event.mouse.y >= 300 && event.mouse.y <= 345) {
+				event.mouse.y >= 300 && event.mouse.y <= 345 && selectState == true && point >= precoEstado) {
 
 				hitbox[8] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//MA
 			else if (event.mouse.x >= 920 && event.mouse.x <= 965 &&
-				event.mouse.y >= 300 && event.mouse.y <= 345) {
+				event.mouse.y >= 300 && event.mouse.y <= 345 && selectState == true && point >= precoEstado) {
 
 				hitbox[9] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//CE
 			else if (event.mouse.x >= 1015 && event.mouse.x <= 1055 &&
-				event.mouse.y >= 300 && event.mouse.y <= 345) {
+				event.mouse.y >= 300 && event.mouse.y <= 345 && selectState == true && point >= precoEstado) {
 
 				hitbox[10] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//RN
 			else if (event.mouse.x >= 1130 && event.mouse.x <= 1200 &&
-				event.mouse.y >= 250 && event.mouse.y <= 300) {
+				event.mouse.y >= 250 && event.mouse.y <= 300 && selectState == true && point >= precoEstado) {
 
 				hitbox[11] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//PB
 			else if (event.mouse.x >= 1160 && event.mouse.x <= 1215 &&
-				event.mouse.y >= 310 && event.mouse.y <= 345) {
+				event.mouse.y >= 310 && event.mouse.y <= 345 && selectState == true && point >= precoEstado) {
 
 				hitbox[12] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//PE
 			else if (event.mouse.x >= 1200 && event.mouse.x <= 1260 &&
-				event.mouse.y >= 350 && event.mouse.y <= 385) {
+				event.mouse.y >= 350 && event.mouse.y <= 385 && selectState == true && point >= precoEstado) {
 
 				hitbox[13] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 
 			//AL
 			else if (event.mouse.x >= 1130 && event.mouse.x <= 1180 &&
-				event.mouse.y >= 380 && event.mouse.y <= 420) {
+				event.mouse.y >= 380 && event.mouse.y <= 420 && selectState == true && point >= precoEstado) {
 
 				hitbox[14] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//SE
 			else if (event.mouse.x >= 1100 && event.mouse.x <= 1165 &&
-				event.mouse.y >= 425 && event.mouse.y <= 470) {
+				event.mouse.y >= 425 && event.mouse.y <= 470 && selectState == true && point >= precoEstado) {
 
 				hitbox[15] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//AC
 			else if (event.mouse.x >= 550 && event.mouse.x <= 610 &&
 				event.mouse.y >= 380 && event.mouse.y <= 420 ||
 				event.mouse.x >= 490 && event.mouse.x <= 550 &&
-				event.mouse.y >= 360 && event.mouse.y <= 420) {
+				event.mouse.y >= 360 && event.mouse.y <= 420 && selectState == true && point >= precoEstado) {
 
 				hitbox[16] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 
 			//RO
 			else if (event.mouse.x >= 640 && event.mouse.x <= 710 &&
-				event.mouse.y >= 380 && event.mouse.y <= 465) {
+				event.mouse.y >= 380 && event.mouse.y <= 465 && selectState == true && point >= precoEstado) {
 
 				hitbox[17] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//AM
 			else if (event.mouse.x >= 570 && event.mouse.x <= 730 &&
-				event.mouse.y >= 260 && event.mouse.y <= 365.0) {
+				event.mouse.y >= 260 && event.mouse.y <= 365.0 && selectState == true && point >= precoEstado) {
 
 				hitbox[18] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//RR
 			else if (event.mouse.x >= 670 && event.mouse.x <= 730 &&
-				event.mouse.y >= 150 && event.mouse.y <= 250) {
+				event.mouse.y >= 150 && event.mouse.y <= 250 && selectState == true && point >= precoEstado) {
 
 				hitbox[19] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//PA
 			else if (event.mouse.x >= 770 && event.mouse.x <= 880.0 &&
-				event.mouse.y >= 260 && event.mouse.y <= 370.0) {
+				event.mouse.y >= 260 && event.mouse.y <= 370.0 && selectState == true && point >= precoEstado) {
 
 				hitbox[20] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 
 			//AP
 			else if (event.mouse.x >= 810 && event.mouse.x <= 870 &&
-				event.mouse.y >= 150 && event.mouse.y <= 250) {
+				event.mouse.y >= 150 && event.mouse.y <= 250 && selectState == true && point >= precoEstado) {
 
 				hitbox[21] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//TO
 			else if (event.mouse.x >= 870 && event.mouse.x <= 920 &&
-				event.mouse.y >= 380 && event.mouse.y <= 450) {
+				event.mouse.y >= 380 && event.mouse.y <= 450 && selectState == true && point >= precoEstado) {
 
 				hitbox[22] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//MT
 			else if (event.mouse.x >= 720 && event.mouse.x <= 830 &&
-				event.mouse.y >= 400 && event.mouse.y <= 500) {
+				event.mouse.y >= 400 && event.mouse.y <= 500 && selectState == true && point >= precoEstado) {
 
 				hitbox[23] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//GO
 			else if (event.mouse.x >= 850 && event.mouse.x <= 910 &&
-				event.mouse.y >= 460 && event.mouse.y <= 530) {
+				event.mouse.y >= 460 && event.mouse.y <= 530 && selectState == true && point >= precoEstado) {
 
 				hitbox[24] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			//MS
 			else if (event.mouse.x >= 750 && event.mouse.x <= 830 &&
-				event.mouse.y >= 520 && event.mouse.y <= 610) {
+				event.mouse.y >= 520 && event.mouse.y <= 610 && selectState == true && point >= precoEstado) {
 
 				hitbox[25] = true;
+				ordem++;
+				point -= precoEstado;
 			}
 
 			for (int i = 0; i < 26; i++) {
 
 				if (hitbox[i] == true) {
 					infect[i] = true;
+					selectState = false;
 
 					if (clickCancel[i] == false) {
 						colorEvent[i] = true;
@@ -530,13 +607,199 @@ int main() {
 				openStore = false;
 		}
 
-		if (openStore)
-			atualizar_janela(openStore, queue, event, timeout, store, font, bioIcon, point, pointFont);
+		//--------------------------------------------------------------
+
+		while (openStore) {
+
+			int activeEvent = al_wait_for_event_until(queue, &event, &timeout);
+
+			// Evento para fechar no botão
+			if (activeEvent && event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+				break;
+			}
+
+			// Apertar botão para voltar para o main
+			if (event.type == ALLEGRO_EVENT_KEY_DOWN)
+				if (event.keyboard.keycode == ALLEGRO_KEY_B)
+					openStore = false;
+
+			// Deseja a loja
+			al_draw_bitmap(store, 0, 0, 0);
+
+
+
+			// ------------- Eventos de Sintomas ------------- \\
+
+			al_draw_rectangle(130, 290, 185, 380, al_map_rgb(255, 255, 255), 2.0); // gripe
+
+			if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+
+				if (event.mouse.x >= 130 && event.mouse.x <= 185 &&
+					event.mouse.y >= 290 && event.mouse.y <= 380) {
+
+					if (bought[0] == false && point >= 15) {
+						point -= 20;
+						velocidade--;
+						bought[0] = true;
+					}				
+
+				}
+
+				if (event.mouse.x >= 240 && event.mouse.x <= 294 &&
+					event.mouse.y >= 371 && event.mouse.y <= 459) {
+
+
+					if (bought[1] == false && point >= 15) {
+						point -= 15;
+						velocidade--;
+						bought[0] = true;
+					}
+
+				}
+
+				if (event.mouse.x >= 315 && event.mouse.x <= 373 &&
+					event.mouse.y >= 415 && event.mouse.y <= 500) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 398 && event.mouse.x <= 455 &&
+					event.mouse.y >= 460 && event.mouse.y <= 548) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 475 && event.mouse.x <= 533 &&
+					event.mouse.y >= 505 && event.mouse.y <= 590) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 555 && event.mouse.x <= 613 &&
+					event.mouse.y >= 550 && event.mouse.y <= 635) {
+
+					openStore = false;
+
+				}
+
+				// ------------- Eventos de Transmissão ------------- \\
+
+				if (event.mouse.x >= 1050 && event.mouse.x <= 1101 &&
+					event.mouse.y >= 268 && event.mouse.y <= 345) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 1148 && event.mouse.x <= 1198 &&
+					event.mouse.y >= 268 && event.mouse.y <= 345) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 1245 && event.mouse.x <= 1292 &&
+					event.mouse.y >= 268 && event.mouse.y <= 345) {
+
+					openStore = false;
+
+				}
+
+				// ------------- Eventos de Citologia ------------- \\
+
+				if (event.mouse.x >= 1003 && event.mouse.x <= 1054 &&
+					event.mouse.y >= 578 && event.mouse.y <= 663) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 1084 && event.mouse.x <= 1135 &&
+					event.mouse.y >= 621 && event.mouse.y <= 706) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 1185 && event.mouse.x <= 1235 &&
+					event.mouse.y >= 621 && event.mouse.y <= 706) {
+
+					openStore = false;
+
+				}
+
+				if (event.mouse.x >= 1265 && event.mouse.x <= 1315 &&
+					event.mouse.y >= 664 && event.mouse.y <= 749) {
+
+					openStore = false;
+
+				}
+			}
+
+			// Desenhar icone 
+			al_draw_bitmap(bioIcon, 30, 795, 0);
+
+			showPoints(point, pointFont);
+
+			al_flip_display();
+		}
+
+
+
+
+
+
+		//----------------------------------------------------------------
 
 		// Desenhar o icone de pontuação
 		al_draw_bitmap(bioIcon, 30, 795, 0);
 
 		showPoints(point, pointFont);
+
+		if (limit[0] == true &&
+			limit[1] == true &&
+			limit[2] == true &&
+			limit[3] == true &&
+			limit[4] == true &&
+			limit[5] == true &&
+			limit[6] == true &&
+			limit[7] == true &&
+			limit[8] == true &&
+			limit[9] == true &&
+			limit[10] == true &&
+			limit[11] == true &&
+			limit[12] == true &&
+			limit[13] == true &&
+			limit[14] == true &&
+			limit[15] == true &&
+			limit[16] == true &&
+			limit[17] == true &&
+			limit[18] == true &&
+			limit[19] == true &&
+			limit[20] == true &&
+			limit[21] == true &&
+			limit[22] == true &&
+			limit[23] == true &&
+			limit[24] == true &&
+			limit[25] == true) {
+
+			
+			al_draw_bitmap(vitoria, 0, 0, 0);
+			
+		}
+
+		if (cura >= 1499)
+			while (1) {
+				al_draw_bitmap(derrota, 0, 0, 0);
+
+				if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) 
+					break;
+
+				al_flip_display();
+		}
 
 		// Atualiza a tela quando tiver algo para mostrar
 		al_flip_display();
